@@ -6,16 +6,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rocket = "0.5.0-rc.1"
+rocket = { path = "../Rocket/core/lib" }
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
 
-[dependencies.rocket_contrib]
-version = "*"
-default-features = false
-features = ["handlebars", "serve", "templates"]
+#[dependencies.rocket]
+#path = "../../core/lib"
+#features = ["json", "msgpack", "uuid"]
 
 [dependencies.rocket_dyn_templates]
-version = "0.1.0-rc.1"
+path = "../Rocket/contrib/dyn_templates"
 features = ["handlebars"]

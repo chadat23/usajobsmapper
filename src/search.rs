@@ -1,49 +1,40 @@
 use rocket::Request;
 use rocket::response::Redirect;
 
-
-use rocket_dyn_templates::{Template, handlebars};
-use serde::Serialize;
+use rocket_dyn_templates::{Template, handlebars, context};
 
 use self::handlebars::{Handlebars, JsonRender};
 
-#[derive(Serialize)]
-struct Thing {
-    title: String,
-    name: String,
-    items: Vec<String>,
-}
-
 #[get("/")]
 pub fn index() -> Redirect {
-    Redirect::to(uri!("/hbs", hello(name = "Your Name")))
+    Redirect::to(uri!("/search", hello(name = "Your Name")))
 }
 
 #[get("/hello/<name>")]
 pub fn hello(name: &str) -> Template {
-    let context = Thing {
-        title: "Bob".to_string(),
-        name: name.to_string(),
-        items: vec!["One".to_string(), "Two".to_string(), "Three".to_string()],
-    };
-
-    Template::render("index", context)
+    Template::render("search/index", context! {
+        title: "Hello",
+        name: Some(name),
+        items: vec!["One", "Two", "Three"],
+        // This special key tells handlebars which template is the parent.
+        parent: "search/base",
+    })
 }
 
-// #[get("/about")]
-// pub fn about() -> Template {
-//     Template::render("hbs/about.html", context! {
-//         title: "About",
-//         parent: "hbs/layout",
-//     })
-// }
+#[get("/about")]
+pub fn about() -> Template {
+    Template::render("search/about.html", context! {
+        title: "About",
+        parent: "search/base",
+    })
+}
 
-// #[catch(404)]
-// pub fn not_found(req: &Request<'_>) -> Template {
-//     Template::render("hbs/error/404", context! {
-//         uri: req.uri()
-//     })
-// }
+#[catch(404)]
+pub fn not_found(req: &Request<'_>) -> Template {
+    Template::render("search/errors/404", context! {
+        uri: req.uri()
+    })
+}
 
 fn wow_helper(
     h: &handlebars::Helper<'_, '_>,
@@ -63,12 +54,14 @@ fn wow_helper(
 
 pub fn customize(hbs: &mut Handlebars) {
     hbs.register_helper("wow", Box::new(wow_helper));
-    hbs.register_template_string("hbs/about.html", r#"
+    hbs.register_template_string("search/about.html", r#"
         {{#*inline "page"}}
+
         <section id="about">
           <h1>About - Here's another page!</h1>
         </section>
+        
         {{/inline}}
-        {{> hbs/layout}}
+        {{~> (parent)~}}
     "#).expect("valid HBS template");
 }

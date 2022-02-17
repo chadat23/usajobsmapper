@@ -1,24 +1,22 @@
-#[macro_use] extern crate rocket;
+#[macro_use]extern crate rocket;
 
-mod hbs;
+mod search;
 
-// #[cfg(test)] mod tests;
-
-// use rocket::response::content::RawHtml;
+use rocket::response::content::RawHtml;
 use rocket_dyn_templates::Template;
 
-// #[get("/")]
-// fn index() -> RawHtml<&'static str> {
-//     RawHtml(r#"See <a href="tera">Tera</a> or <a href="hbs">Handlebars</a>."#)
-// }
+#[get("/")]
+fn index() -> RawHtml<&'static str> {
+    RawHtml(r#"See <a href="tera">Tera</a> or <a href="search">Search</a>."#)
+}
 
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        // .mount("/", routes![index])
-        .mount("/hbs", routes![hbs::index, hbs::hello])
-        // .register("/hbs", catchers![hbs::not_found])
+        .mount("/", routes![index])
+        .mount("/search", routes![search::index, search::hello, search::about])
+        .register("/search", catchers![search::not_found])
         .attach(Template::custom(|engines| {
-            hbs::customize(&mut engines.handlebars);
+            search::customize(&mut engines.handlebars);
         }))
 }
