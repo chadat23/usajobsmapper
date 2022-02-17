@@ -1,26 +1,24 @@
 #[macro_use] extern crate rocket;
 
-use rocket::form::Form;
+mod hbs;
 
-// https://github.com/chadat23/usajobsmapper2/blob/main/usajobsmapper/search_utils.py
-// https://rocket.rs/v0.5-rc/guide/requests/#forms
-#[derive(FromForm)]
-struct SearchCriteria<'r> {
-    Keyword: &'r str,
-    locaton: &'r str,
-}
+// #[cfg(test)] mod tests;
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
-}
+// use rocket::response::content::RawHtml;
+use rocket_dyn_templates::Template;
 
-#[post("/todo", data = "<search_criteria>")]
-fn search(search_criteria: Form<SearchCriteria<'_>>) { 
-
- }
+// #[get("/")]
+// fn index() -> RawHtml<&'static str> {
+//     RawHtml(r#"See <a href="tera">Tera</a> or <a href="hbs">Handlebars</a>."#)
+// }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    rocket::build()
+        // .mount("/", routes![index])
+        .mount("/hbs", routes![hbs::index, hbs::hello])
+        // .register("/hbs", catchers![hbs::not_found])
+        .attach(Template::custom(|engines| {
+            hbs::customize(&mut engines.handlebars);
+        }))
 }

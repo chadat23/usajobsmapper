@@ -1,0 +1,48 @@
+.btn-primary {
+    background: #000095;
+    /*outline-color: #000095;*/
+    border-color: #000095;
+}
+
+body {
+    color: #000095;
+}
+
+.btn-nav {
+    color: #000095;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.row {
+    border: 10px solid #902525;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+div.map {
+    padding: 0;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+header {
+    /*align-items: baseline;*/
+    justify-content: space-between;
+}
+
+.mapper {
+    font-style: oblique;
+    color: #000095;
+    text-decoration: none;
+}
+
+.navbar {
+    height: 20px;
+}
+
+#notes {
+    color: #000095;
+}
