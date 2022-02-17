@@ -1,14 +1,21 @@
 use rocket::Request;
-use rocket::response::Redirect;
+// use rocket::response::Redirect;
 
 use rocket_dyn_templates::{Template, handlebars, context};
 
 use self::handlebars::{Handlebars, JsonRender};
+// use rocket::response::content::RawHtml;
+
 
 #[get("/")]
-pub fn index() -> Redirect {
-    Redirect::to(uri!("/search", hello(name = "Your Name")))
+pub fn index() -> Template {
+    Template::render("search/index", context! {
+        parent: "search/base",
+    })
 }
+
+// #[post("/")]
+// pub fn search()
 
 #[get("/hello/<name>")]
 pub fn hello(name: &str) -> Template {
@@ -25,6 +32,14 @@ pub fn hello(name: &str) -> Template {
 pub fn about() -> Template {
     Template::render("search/about.html", context! {
         title: "About",
+        parent: "search/base",
+    })
+}
+
+#[get("/notes")]
+pub fn notes() -> Template {
+    Template::render("search/notes", context! {
+        title: "Notes",
         parent: "search/base",
     })
 }

@@ -1,0 +1,66 @@
+{{#*inline "head"}}
+  <title>USAJOBSmapper - Notes</title>
+{{/inline}}
+
+{{#*inline "body"}}
+
+    <nav class="navbar">
+        <div class="container-xl">
+            <div>
+                <a href="/search" class="h1 mapper">USAJOBSmapper</a>
+                <!-- <h1 class="mapper">USAJOBSmapper</h1> -->
+            </div>
+            {{!-- <div class="dropdown mt-3">
+                <button class="btn dropdown-toggle" type="button" id="notes" data-bs-toggle="dropdown">
+                    Notes
+                </button> --}}
+                <ul class="" aria-labelledby="notes">
+                    <li class="">Adding more search criteria (as apposed to adding more responses to a
+                        specific criteria) will generally reduce the number of returned
+                        jobs.
+                    </li>
+                    <li class="">Hovering over and/or clicking on map markers will show additional
+                        information.
+                    </li>
+                    <li class="">
+                        Positions shown outside of the Radius circle are typically additional locations for jobs
+                        that have multiple locations, some being within the circle.
+                    </li>
+                    <li class="">This site is not affiliated with
+                        <a href="https://www.usajobs.gov/">USAJOBS</a>,
+                        this site maps and presents results retrieved from USAJOBS searches.
+                    </li>
+                    <li class="">Do not assume that this site is returning all results or that it's
+                        returning the same results that would be gotten from the same search on USAJOBS.gov.
+                    </li>
+                    <li class=""><a href="#map">stuff</a></li>
+                </ul>
+            {{!-- </div> --}}
+        </div>
+    </nav>
+
+    {{!-- {% if content.scrol_to_anchor %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.location.hash = '#{{ content.scrol_to_anchor }}';
+        });
+    </script>
+    {% endif %} --}}
+
+{{!-- <section id="hello">
+  <h1>Hi {{ name }}!</h1>
+  <h3>Here are your items:</h3>
+  <ul>
+    {{#each items}}
+      <li>{{ this }}</li>
+    {{/each}}
+  </ul>
+</section>
+
+<section id="custom-helper">
+  <p>Try going to <a href="/search/hello/Your%20Name">/search/hello/Your Name</a>.</p>
+  <p>Also, check {{ wow "this" }} (custom helper) out!</p>
+</section> --}}
+
+{{/inline}}
+{{~> (parent)~}}
