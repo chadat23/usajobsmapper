@@ -26,18 +26,25 @@ pub struct Query<'v> {
     Radius: &'v str,
     ContinentalUS: bool,
     SortField: SortField,
+    SortDirection: SortDirection,
+}
+
+#[derive(Debug, FromFormField)]
+pub enum SortDirection {
+    Asc,
+    Desc,
 }
 
 #[derive(Debug, FromFormField)]
 pub enum SortField {
-    default,
-    opendate,
-    closedate,
-    jobtitle,
-    salary,
-    location,
-    department,
-    title,
+    DEFAULT,
+    OPENDATE,
+    CLOSEDATE,
+    JOBTITLE,
+    SALARY,
+    LOCATION,
+    DEPARTMENT,
+    TITLE,
 }
 
 #[derive(Debug, FromFormField)]
@@ -81,23 +88,23 @@ pub enum Organization {
 
 #[derive(Debug, FromFormField)]
 enum HiringPath {
-    pubic,
-    vet,
-    nguard,
-    disability,
-    native,
-    mspouse,
-    student,
-    ses,
-    peace,
-    overseas,
-    fed_internal_search,
-    graduates,
-    fed_excepted,
-    fed_competitive,
-    fed_transition,
-    land,
-    special_authorities,
+    PUBIC,
+    VET,
+    NGUARD,
+    DISABILITY,
+    NATIVE,
+    MSPOUSE,
+    STUDENT,
+    SES,
+    PEACE,
+    OVERSEAS,
+    FED_INTERNAL_SEARCH,
+    GRADUATES,
+    FED_EXCEPTED,
+    FED_COMPETITIVE,
+    FED_TRANSITION,
+    LAND,
+    SPECIAL_AUTHORITIES,
 }
 
 #[get("/")]
@@ -123,10 +130,10 @@ pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> (Status, Template) {
     (form.context.status(), template)
 }
 
+#[get("/hello/<name>")]
+
 // #[post("/")]
 // pub fn search()
-
-#[get("/hello/<name>")]
 pub fn hello(name: &str) -> Template {
     Template::render("search/index", context! {
         title: "Hello",
