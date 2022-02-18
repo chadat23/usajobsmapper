@@ -6,12 +6,121 @@ use rocket_dyn_templates::{Template, handlebars, context};
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
 
+use rocket::time::Date;
+use rocket::http::{Status, ContentType};
+use rocket::form::{Form, Contextual, FromForm, FromFormField, Context};
+use rocket::fs::{FileServer, TempFile, relative};
+
+#[derive(Debug, FromForm)]
+pub struct Query<'v> {
+    Keyword: &'v str,
+    PositionTitle: &'v str,
+    HiringPath: Vec<HiringPath>,
+    PayGradeLow: &'v str,
+    PayGradeHigh: &'v str,
+    Organization: Vec<Organization>,
+    JobCategoryCode: &'v str,
+    RelocationIndicator: bool,
+    PositionScheduleTypeCode: Vec<PositionScheduleTypeCode>,
+    LocationName: &'v str,
+    Radius: &'v str,
+    ContinentalUS: bool,
+    SortField: SortField,
+}
+
+#[derive(Debug, FromFormField)]
+pub enum SortField {
+    default,
+    opendate,
+    closedate,
+    jobtitle,
+    salary,
+    location,
+    department,
+    title,
+}
+
+#[derive(Debug, FromFormField)]
+pub enum PositionScheduleTypeCode {
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+}
+
+#[derive(Debug, FromFormField)]
+pub enum Organization {
+    AG,
+    AF,                
+    AR,                
+    CM,
+    FQ,
+    DD,
+    ED,
+    DN,
+    EOP,
+    GS,
+    HE,
+    HS,
+    HU,
+    IN,
+    JL,
+    DJ,
+    DL,
+    LL,
+    NN,
+    AH,
+    NV,
+    OT,
+    ST,
+    TD,
+    TR,
+    VA,
+}
+
+#[derive(Debug, FromFormField)]
+enum HiringPath {
+    pubic,
+    vet,
+    nguard,
+    disability,
+    native,
+    mspouse,
+    student,
+    ses,
+    peace,
+    overseas,
+    fed_internal_search,
+    graduates,
+    fed_excepted,
+    fed_competitive,
+    fed_transition,
+    land,
+    special_authorities,
+}
 
 #[get("/")]
 pub fn index() -> Template {
     Template::render("search/index", context! {
         parent: "search/base",
     })
+}
+
+#[post("/query", data = "<form>")]
+pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> (Status, Template) {
+    let template = match form.value {
+        Some(ref submission) => {
+            println!("submission: {:#?}", submission);
+            Template::render("search/index", &form.context)
+        }
+        None => {
+            println!(" not submission: {:#?}", "lkj");
+            Template::render("search/index", &form.context)
+        }
+    };
+
+    (form.context.status(), template)
 }
 
 // #[post("/")]

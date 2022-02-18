@@ -22,7 +22,7 @@ pub fn index() -> Redirect {
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index])
-        .mount("/search", routes![search::index, search::notes, search::about])
+        .mount("/search", routes![search::index, search::notes, search::about, search::search])
         .mount("/static", FileServer::from("static/"))
         .register("/search", catchers![search::not_found])
         .attach(Template::custom(|engines| {

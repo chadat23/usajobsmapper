@@ -7,40 +7,14 @@
     <nav class="navbar">
         <div class="container-xl">
             <div>
-                <a href="/search" class="h1 mapper">USAJOBSmapper</a>
-                <!-- <h1 class="mapper">USAJOBSmapper</h1> -->
+                <a href="/search" class="h1 mapper">USAJOBSmapper</a> 
             </div>
             <div class="dropdown mt-3">
-              <a href="/search/notes" class="btn dropdown-toggle">Notes</a>
-                {{!-- <button class="btn dropdown-toggle" type="button" id="notes" data-bs-toggle="dropdown">
-                    Notes
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notes">
-                    <li class="dropdown-item">Adding more search criteria (as apposed to adding more responses to a
-                        specific criteria) will generally reduce the number of returned
-                        jobs.
-                    </li>
-                    <li class="dropdown-item">Hovering over and/or clicking on map markers will show additional
-                        information.
-                    </li>
-                    <li class="dropdown-item">
-                        Positions shown outside of the Radius circle are typically additional locations for jobs
-                        that have multiple locations, some being within the circle.
-                    </li>
-                    <li class="dropdown-item">This site is not affiliated with
-                        <a href="https://www.usajobs.gov/">USAJOBS</a>,
-                        this site maps and presents results retrieved from USAJOBS searches.
-                    </li>
-                    <li class="dropdown-item">Do not assume that this site is returning all results or that it's
-                        returning the same results that would be gotten from the same search on USAJOBS.gov.
-                    </li>
-                    <li class="dropdown-item"><a href="#map">stuff</a></li>
-                </ul> --}}
             </div>
         </div>
     </nav>
     <div class="container-xl my-5">
-        <form action="/">
+        <form action="/search/query" method="post">
             <div class="row">
                 <div class="col-lg-8 dropdown">
                     <h2 class="h3">Keywords: 
@@ -264,20 +238,20 @@
                         </button>
                     </h2>
                     <select class="form-select" multiple name="PositionScheduleTypeCode">
-                        <option {% if '1' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="1">Full-time
+                        <option {% if 'ONE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
+                                value="ONE">Full-time
                         </option>
-                        <option {% if '2' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="2">Part-time
+                        <option {% if 'TWO' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
+                                value="TWO">Part-time
                         </option>
-                        <option {% if '3' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="3">Shift work
+                        <option {% if 'THREE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
+                                value="THREE">Shift work
                         </option>
-                        <option {% if '4' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="4">Intermittent
+                        <option {% if 'FOUR' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
+                                value="FOUR">Intermittent
                         </option>
-                        <option {% if '5' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="5">Multiple
+                        <option {% if 'FIVE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
+                                value="FIVE">Multiple
                         </option>
                     </select>
                 </div>
@@ -303,7 +277,7 @@
                 <input type="text" name="number-of-pages" value="{{ content.number_of_pages }}" hidden>
                 <div class="col-lg-1">
                     <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="search" value="search">Search</button>
-                    <a href="/" class="btn btn-primary btn-sm">Reset</a>
+                    <a href="/search" class="btn btn-primary btn-sm">Reset</a>
                 </div>
                 <div class="col-lg-3">
                     <input class="form-check-input" type="checkbox" value="True" name="ContinentalUS"
