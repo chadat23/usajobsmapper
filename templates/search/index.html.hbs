@@ -15,7 +15,8 @@
         </div>
     </nav>
     <div class="container-xl my-5">
-        <form action="/search/query" method="post">
+        {{!-- <form action="/search/query" method="post"> --}}
+        <form action="" id="search_form">
             <div class="row">
                 <div class="col-lg-8 dropdown">
                     <h2 class="h3">Keywords: 
@@ -277,7 +278,7 @@
                 <input type="text" name="Page" value="{{ content.Page }}" hidden>
                 <input type="text" name="number-of-pages" value="{{ content.number_of_pages }}" hidden>
                 <div class="col-lg-1">
-                    <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="search" value="search">Search</button>
+                    <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="submit" value="submit">Search</button>
                     <a href="/search" class="btn btn-primary btn-sm">Reset</a>
                 </div>
                 <div class="col-lg-3">
@@ -289,8 +290,8 @@
                 </div>
                 <div class="col-lg-3">
                     <select class="form-select" name="SortField">
-                        <option {% if 'default' in content.SortField %}selected="selected"{% endif %}>
-                            Sort Field
+                        <option {% if 'default' in content.SortField %}selected="selected"{% endif %} 
+                                value="default">Sort Field
                         </option>
                         <option {% if 'opendate' in content.SortField %}selected="selected"{% endif %}
                                 value="opendate">Position start date
@@ -317,7 +318,8 @@
                     <h3 class="h5">Sort Order:</h3>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="SortDirection" id="Asc" value="Asc"
-                        {% if 'Asc' in content.SortDirection %}checked{% endif %}>
+                        {{!-- {% if 'Asc' in content.SortDirection %}checked{% endif %}> --}}
+                        checked>
                         <label class="form-check-label" for="Asc">
                             Ascending
                         </label>
@@ -354,6 +356,28 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const url = "/search/query";
+        const myForm = document.getElementById("search_form");
+
+        myForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch(url, {
+                method: 'post',
+                body: formData,
+            }).then(function (response) {
+                return response.text();
+            }).then(function (text) {
+                console.log("returned text", text);
+            }).catch(function (error) {
+                console.log(error);
+            })
+        })
+    </script>
 
     {{!-- {% if content.scrol_to_anchor %}
     <script>

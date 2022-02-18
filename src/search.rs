@@ -3,6 +3,9 @@ use rocket::Request;
 
 use rocket_dyn_templates::{Template, handlebars, context};
 
+use rocket::serde::{Serialize,};
+use rocket::serde::json::{Json, Value, json};
+
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
 
@@ -11,7 +14,7 @@ use rocket::http::{Status, ContentType};
 use rocket::form::{Form, Contextual, FromForm, FromFormField, Context};
 use rocket::fs::{FileServer, TempFile, relative};
 
-#[derive(Debug, FromForm)]
+#[derive(Debug, FromForm, Serialize)]
 pub struct Query<'v> {
     Keyword: &'v str,
     PositionTitle: &'v str,
@@ -29,13 +32,13 @@ pub struct Query<'v> {
     SortDirection: SortDirection,
 }
 
-#[derive(Debug, FromFormField)]
+#[derive(Debug, FromFormField, Serialize)]
 pub enum SortDirection {
     Asc,
     Desc,
 }
 
-#[derive(Debug, FromFormField)]
+#[derive(Debug, FromFormField, Serialize)]
 pub enum SortField {
     DEFAULT,
     OPENDATE,
@@ -47,7 +50,7 @@ pub enum SortField {
     TITLE,
 }
 
-#[derive(Debug, FromFormField)]
+#[derive(Debug, FromFormField, Serialize)]
 pub enum PositionScheduleTypeCode {
     ONE,
     TWO,
@@ -56,7 +59,7 @@ pub enum PositionScheduleTypeCode {
     FIVE,
 }
 
-#[derive(Debug, FromFormField)]
+#[derive(Debug, FromFormField, Serialize)]
 pub enum Organization {
     AG,
     AF,                
@@ -86,7 +89,7 @@ pub enum Organization {
     VA,
 }
 
-#[derive(Debug, FromFormField)]
+#[derive(Debug, FromFormField, Serialize)]
 enum HiringPath {
     PUBIC,
     VET,
@@ -115,7 +118,9 @@ pub fn index() -> Template {
 }
 
 #[post("/query", data = "<form>")]
-pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> (Status, Template) {
+pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
+    println!("{:?}", form);
+
     let template = match form.value {
         Some(ref submission) => {
             println!("submission: {:#?}", submission);
@@ -127,13 +132,20 @@ pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> (Status, Template) {
         }
     };
 
-    (form.context.status(), template)
+    let sub = match form.value {
+        Some(ref submission) => {
+            submission
+        }
+        None => {
+            panic!("oops")
+        }
+        
+    };
+    
+    serde_json::json!(sub)
 }
 
 #[get("/hello/<name>")]
-
-// #[post("/")]
-// pub fn search()
 pub fn hello(name: &str) -> Template {
     Template::render("search/index", context! {
         title: "Hello",
