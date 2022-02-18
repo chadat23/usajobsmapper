@@ -4,15 +4,13 @@ use rocket::Request;
 use rocket_dyn_templates::{Template, handlebars, context};
 
 use rocket::serde::{Serialize,};
-use rocket::serde::json::{Json, Value, json};
+use rocket::serde::json::{Value};
+use figment::{Figment, providers::{Format, Toml, }};
 
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
 
-use rocket::time::Date;
-use rocket::http::{Status, ContentType};
-use rocket::form::{Form, Contextual, FromForm, FromFormField, Context};
-use rocket::fs::{FileServer, TempFile, relative};
+use rocket::form::{Form, Contextual, FromForm, FromFormField};
 
 #[derive(Debug, FromForm, Serialize)]
 pub struct Query<'v> {
@@ -119,7 +117,22 @@ pub fn index() -> Template {
 
 #[post("/query", data = "<form>")]
 pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
-    println!("{:?}", form);
+    let figment = rocket::Config::figment()
+        .merge(Toml::file("config.toml"));
+
+    let apikey = figment.find_value("usajobs").unwrap()                             
+                             .as_dict().unwrap()
+                             .get("APIKEY").unwrap()
+                             .as_str().unwrap();
+    let useragent = figment.find_value("usajobs").unwrap()
+                                .as_dict().unwrap()
+                                .get("USERAGENT").unwrap()
+                                .as_str().unwrap();
+    let username = figment.find_value("geonames").unwrap()
+                               .as_dict().unwrap()
+                               .get("USERNAME").unwrap()
+                               .as_str().unwrap();
+
 
     let template = match form.value {
         Some(ref submission) => {

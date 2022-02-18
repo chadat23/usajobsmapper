@@ -8,6 +8,8 @@ edition = "2021"
 [dependencies]
 # rocket = { path = "../Rocket/core/lib" }
 # rocket = "*"
+# figment = { version = "0.9", features = ["toml"]}
+figment = "0.10.6"
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
