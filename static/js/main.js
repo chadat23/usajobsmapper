@@ -1,3 +1,5 @@
+#![feature(string_remove_matches)]
+
 const leaflet = window.leaflet;
 
 const url = "/search/query";
@@ -32,7 +34,6 @@ function makeMap() {
     var start_coords = ((sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2)
 
     var map = L.map('mapid').setView([51.505, -0.09], 13);
-    L.raster_layers.tileLayer()
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
     console.log('loaded');

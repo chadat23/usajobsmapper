@@ -1,19 +1,32 @@
+// extern use js;
+// use json as js;
+// use json::parse;
+
+use std::collections::HashMap;
 use std::fmt::format;
 use std::fmt;
+use std::str::FromStr;
 
 use rocket::Request;
 // use rocket::response::Redirect;
 
+use rocket::http::hyper::body::Buf;
 use rocket_dyn_templates::{Template, handlebars, context};
 
-use rocket::serde::{Serialize,};
+use rocket::serde::{Serialize, Deserialize};
 use rocket::serde::json::{Value};
+// use rocket::serde::json as js;
 use figment::{Figment, providers::{Format, Toml, }};
 
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
 
 use rocket::form::{Form, Contextual, FromForm, FromFormField};
+
+use reqwest;
+use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT, CONTENT_TYPE};
+use reqwest::{ Method, Url, header };
+
 
 #[derive(Debug, FromForm, Serialize)]
 pub struct Query<'v> {
@@ -152,22 +165,22 @@ pub fn index() -> Template {
 }
 
 #[post("/query", data = "<form>")]
-pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
+pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
     let figment = rocket::Config::figment()
         .merge(Toml::file("config.toml"));
 
-    let apikey = figment.find_value("usajobs").unwrap()                             
+    let apikey = String::from(figment.find_value("usajobs").unwrap()                             
                              .as_dict().unwrap()
                              .get("APIKEY").unwrap()
-                             .as_str().unwrap();
-    let useragent = figment.find_value("usajobs").unwrap()
+                             .as_str().unwrap());
+    let useragent = String::from(figment.find_value("usajobs").unwrap()
                                 .as_dict().unwrap()
                                 .get("USERAGENT").unwrap()
-                                .as_str().unwrap();
-    let username = figment.find_value("geonames").unwrap()
+                                .as_str().unwrap());
+    let username = String::from(figment.find_value("geonames").unwrap()
                                .as_dict().unwrap()
                                .get("USERNAME").unwrap()
-                               .as_str().unwrap();
+                               .as_str().unwrap());
 
     let query = match form.value {
         Some(ref submission) => {
@@ -181,16 +194,40 @@ pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
 
     let url = make_url(query);
 
-    let template = match form.value {
-        Some(ref submission) => {
-            println!("submission: {:#?}", submission);
-            Template::render("search/index", &form.context)
-        }
-        None => {
-            println!(" not submission: {:#?}", "lkj");
-            Template::render("search/index", &form.context)
-        }
-    };
+    let res = request_jobs(url, apikey, useragent);
+    let res = res.await.text().await.unwrap().replace(r#"\""#, "");
+    // println!("******************* {:#?}", res);
+    // let res = serde_json::json!(res);
+    let jobs = get_jobs(res);
+    // let res = serde_json::json!(res);
+    // let jobs = get_jobs()
+    // let res: JobSearch = serde_json::from_value(res).unwrap();
+    // json::serde_json::map;
+    // let res = res
+    // let res = res.await.json::<JobSearch>().await.unwrap();
+    // let res = res.await.json::<HashMap<String, String>>().await.unwrap();
+    // let res = res.await.text().await.unwrap();
+
+    // println!("******************* {:#?}", res.get(index));
+
+    // for (str, val) in res {
+    //     println!("{}", str);
+    //     if str == "contact" {
+    //         d = serde_json::from_value(val)?;
+    //     }
+    // }
+    // // let response = reqwest::::get(url);
+
+    // // let template = match form.value {
+    // //     Some(ref submission) => {
+    // //         println!("submission: {:#?}", submission);
+    // //         Template::render("search/index", &form.context)
+    // //     }
+    // //     None => {
+    // //         println!(" not submission: {:#?}", "lkj");
+    // //         Template::render("search/index", &form.context)
+    // //     }
+    // // };
 
     let sub = match form.value {
         Some(ref submission) => {
@@ -203,6 +240,7 @@ pub fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
     };
     
     serde_json::json!(sub)
+    // res
 }
 
 #[get("/hello/<name>")]
@@ -269,8 +307,22 @@ pub fn customize(hbs: &mut Handlebars) {
     "#).expect("valid HBS template");
 }
 
-fn make_url(query: &Query) -> String {
+async fn request_jobs(url: String, apikey: String, useragent: String) -> reqwest::Response {
     let HOST = "data.usajobs.gov";
+
+    let client = reqwest::Client::new();
+
+    let res = client
+        .get(url)
+        .header("Host", HOST)
+        .header("User-Agent", useragent)
+        .header("Authorization-Key", apikey);
+
+    res.send().await.unwrap()
+}
+
+fn make_url(query: &Query) -> String {
+    // let HOST = "data.usajobs.gov";
     let BASE_URL = "https://data.usajobs.gov/api/search?";
 
     let mut payload: String = String::from(BASE_URL);
@@ -339,6 +391,33 @@ fn make_url(query: &Query) -> String {
         payload = format!("{}SortField={}&", payload, query.sort_field)
     }
     payload = format!("{}SortDirection={}&", payload, query.sort_direction);
+    payload = format!("{}ResultsPerPage=2&", payload);
+    payload = format!("{}Fields=Min&", payload);
+
+
+    // println!("{:?}", payload);
 
     payload.replace(" ", "%20")
+}
+
+pub fn get_jobs(response: String) {
+    let response = json::parse(response.as_str()).unwrap();
+    println!("{:#?}", response);
+    println!("************ {:?}", response["LanguageCode"]);
+    
+    // println!("{:#?}", String::from(response.as_str().unwrap()).split("\\\""));
+    
+
+    // let SearchResult = response.get("SearchResult");
+
+
+    
+    // println!("///////////////////////////////////////                 {:?}", response.get("LanguageCode"));
+    // println!("***************************************                {:?}", response.get(r#"\"LanguageCode\""#));
+
+    // let SearchResultCount = SearchResult.get("SearchResultCount").unwrap();
+    // let SearchResultCountAll = SearchResult.get("SearchResultCountAll").unwrap();
+    // let SearchResultItems = SearchResult.get("SearchResultItems").unwrap();
+
+    
 }

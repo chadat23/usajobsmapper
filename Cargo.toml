@@ -6,12 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# rocket = { path = "../Rocket/core/lib" }
-# rocket = "*"
-# figment = { version = "0.9", features = ["toml"]}
+json = "0.12.4"
+reqwest = {version = "0.11.9", features = ["blocking", "json"]}
+openssl = { version = "0.10", features = ["vendored"] }
 figment = "0.10.6"
 serde = "1.0"
-serde_derive = "1.0"
 serde_json = "1.0"
 
 [dependencies.rocket]
