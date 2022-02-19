@@ -222,7 +222,7 @@
                     <small>Some jobs have multiple locations.</small>
                 </div>
             </div>
-            <div class="row map" id="map">
+            <div class="row map" id="mapid" style="height: 500px;">
                 <div class="button-group">
                     Page:
                     <a href="{{ content.first }}" class="btn btn-sm btn-nav"><<</a>
@@ -236,27 +236,7 @@
         </form>
     </div>
 
-    <script>
-        const url = "/search/query";
-        const myForm = document.getElementById("search_form");
-
-        myForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-
-            fetch(url, {
-                method: 'post',
-                body: formData,
-            }).then(function (response) {
-                return response.text();
-            }).then(function (text) {
-                console.log("returned text", text);
-            }).catch(function (error) {
-                console.log(error);
-            })
-        })
-    </script>
+    <script src="/static/js/main.js"></script>
 
     {{!-- {% if content.scrol_to_anchor %}
     <script>
