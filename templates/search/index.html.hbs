@@ -15,7 +15,6 @@
         </div>
     </nav>
     <div class="container-xl my-5">
-        {{!-- <form action="/search/query" method="post"> --}}
         <form action="" id="search_form">
             <div class="row">
                 <div class="col-lg-8 dropdown">
@@ -24,10 +23,8 @@
                             ?
                         </button>
                     </h2>
-                    <input type="text" class="form-control" name="Keyword"
+                    <input type="text" class="form-control" name="keyword"
                       value="">
-                          {{!-- value="{{#replace ";" content.Keyword" --}}
-                           {{!-- value="{{ content.Keyword | replace(';', '') }}"> --}}
                 </div>
                 <div class="col-lg-4 dropdown">
                     <h2 class="h3">Position Title:
@@ -35,8 +32,7 @@
                             ?
                         </button>
                     </h2>
-                    <input type="text" class="form-control" name="PositionTitle"
-                           {{!-- value="{{ content.PositionTitle | replace(';', ' ') }}"> --}}
+                    <input type="text" class="form-control" name="position_title"
                            value="">
                 </div>
             </div>
@@ -47,58 +43,24 @@
                             ?
                         </button>
                     </h2>
-                    <select class="form-select" multiple name="HiringPath">
-                        <option {% if 'public' in content.HiringPath %}selected="selected"{% endif %}
-                                value="public">Open to the public
-                        </option>
-                        <option {% if 'vet' in content.HiringPath %}selected="selected"{% endif %}
-                                value="vet">Veterans
-                        </option>
-                        <option {% if 'nguard' in content.HiringPath %}selected="selected"{% endif %}
-                                value="nguard">National Guard & Reserve
-                        </option>
-                        <option {% if 'disability' in content.HiringPath %}selected="selected"{% endif %}
-                                value="disability">Individuals with disabilities
-                        </option>
-                        <option {% if 'native' in content.HiringPath %}selected="selected"{% endif %}
-                                value="native">Native Americans
-                        </option>
-                        <option {% if 'mspouse' in content.HiringPath %}selected="selected"{% endif %}
-                                value="mspouse">Military spouses
-                        </option>
-                        <option {% if 'student' in content.HiringPath %}selected="selected"{% endif %}
-                                value="student">Students
-                        </option>
-                        <option {% if 'ses' in content.HiringPath %}selected="selected"{% endif %}
-                                value="ses">Senior executives
-                        </option>
-                        <option {% if 'peace' in content.HiringPath %}selected="selected"{% endif %}
-                                value="peace">PeaceCorps & AmeriCorps Vista
-                        </option>
-                        <option {% if 'overseas' in content.HiringPath %}selected="selected"{% endif %}
-                                value="overseas">Family of overseas employees
-                        </option>
-                        <option {% if 'fed-internal-search' in content.HiringPath %}selected="selected"{% endif %}
-                                value="fed-internal-search">Internal to an agency
-                        </option>
-                        <option {% if 'graduates' in content.HiringPath %}selected="selected"{% endif %}
-                                value="graduates">Recent Graduates
-                        </option>
-                        <option {% if 'fed-excepted' in content.HiringPath %}selected="selected"{% endif %}
-                                value="fed-excepted">Excepted service
-                        </option>
-                        <option {% if 'fed-competitive' in content.HiringPath %}selected="selected"{% endif %}
-                                value="fed-competitive">Competitive service
-                        </option>
-                        <option {% if 'fed-transition' in content.HiringPath %}selected="selected"{% endif %}
-                                value="fed-transition">Career transition (CTAP,ICTAP,RPL)
-                        </option>
-                        <option {% if 'land' in content.HiringPath %}selected="selected"{% endif %}
-                                value="land">Land & base management
-                        </option>
-                        <option {% if 'special-authorities' in content.HiringPath %}selected="selected"{% endif %}
-                                value="special-authorities">Special authorities
-                        </option>
+                    <select class="form-select" multiple name="hiring_path">
+                        <option value="public">Open to the public</option>
+                        <option value="vet">Veterans</option>
+                        <option value="nguard">National Guard & Reserve</option>
+                        <option value="disability">Individuals with disabilities</option>
+                        <option value="native">Native Americans</option>
+                        <option value="mspouse">Military spouses</option>
+                        <option value="student">Students</option>
+                        <option value="ses">Senior executives</option>
+                        <option value="peace">PeaceCorps & AmeriCorps Vista</option>
+                        <option value="overseas">Family of overseas employees</option>
+                        <option value="fed-internal-search">Internal to an agency</option>
+                        <option value="graduates">Recent Graduates</option>
+                        <option value="fed-excepted">Excepted service</option>
+                        <option value="fed-competitive">Competitive service</option>
+                        <option value="fed-transition">Career transition (CTAP,ICTAP,RPL)</option>
+                        <option value="land">Land & base management</option>
+                        <option value="special-authorities">Special authorities</option>
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
@@ -117,12 +79,12 @@
                     </def>
                     <def class="row">
                         <def class="col-lg-6">
-                            <input type="number" step="1" class="form-control" name="PayGradeLow"
-                                   value="{{ content.PayGradeLow }}">
+                            <input type="number" step="1" class="form-control" name="pay_grade_low"
+                                   value="">
                         </def>
                         <def class="col-lg-6">
-                            <input type="number" step="1" class="form-control" name="PayGradeHigh"
-                                   value="{{ content.PayGradeHigh }}">
+                            <input type="number" step="1" class="form-control" name="pay_grade_high"
+                                   value="">
                         </def>
                     </def>
                 </div>
@@ -132,85 +94,33 @@
                             ?
                         </button>
                     </h2>
-                    <select class="form-select" multiple name="Organization">
-                        <option {% if 'AG' in content.Organization %}selected="selected"{% endif %} value="AG">
-                            Department of Agriculture
-                        </option>
-                        <option {% if 'AF' in content.Organization %}selected="selected"{% endif %} value="AF">
-                            Department of the Air Force
-                        </option>
-                        <option {% if 'AR' in content.Organization %}selected="selected"{% endif %} value="AR">
-                            Department of the Army
-                        </option>
-                        <option {% if 'CM' in content.Organization %}selected="selected"{% endif %} value="CM">
-                            Department of Commerce
-                        </option>
-                        <option {% if 'FQ' in content.Organization %}selected="selected"{% endif %} value="FQ">Court
-                            Services and Offender Supervision Agency for DC
-                        </option>
-                        <option {% if 'DD' in content.Organization %}selected="selected"{% endif %} value="DD">
-                            Department of Defense
-                        </option>
-                        <option {% if 'ED' in content.Organization %}selected="selected"{% endif %} value="ED">
-                            Department of Education
-                        </option>
-                        <option {% if 'DN' in content.Organization %}selected="selected"{% endif %} value="DN">
-                            Department of Energy
-                        </option>
-                        <option {% if 'EOP' in content.Organization %}selected="selected"{% endif %} value="EOP">
-                            Executive Office of the President
-                        </option>
-                        <option {% if 'GS' in content.Organization %}selected="selected"{% endif %} value="GS">General
-                            Service Administration
-                        </option>
-                        <option {% if 'HE' in content.Organization %}selected="selected"{% endif %} value="HE">
-                            Department of Health and Human Services
-                        </option>
-                        <option {% if 'HS' in content.Organization %}selected="selected"{% endif %} value="HS">
-                            Department of Homeland Security
-                        </option>
-                        <option {% if 'HU' in content.Organization %}selected="selected"{% endif %} value="HU">
-                            Department of Housing and Urban Development
-                        </option>
-                        <option {% if 'IN' in content.Organization %}selected="selected"{% endif %} value="IN">
-                            Department of the Interior
-                        </option>
-                        <option {% if 'JL' in content.Organization %}selected="selected"{% endif %} value="JL">Judicial
-                            Branch
-                        </option>
-                        <option {% if 'DJ' in content.Organization %}selected="selected"{% endif %} value="DJ">
-                            Department of Justice
-                        </option>
-                        <option {% if 'DL' in content.Organization %}selected="selected"{% endif %} value="DL">
-                            Department of Labor
-                        </option>
-                        <option {% if 'LL' in content.Organization %}selected="selected"{% endif %} value="LL">
-                            Legislative Branch
-                        </option>
-                        <option {% if 'NN' in content.Organization %}selected="selected"{% endif %} value="NN">National
-                            Aeronautics and Space Administration
-                        </option>
-                        <option {% if 'AH' in content.Organization %}selected="selected"{% endif %} value="AH">National
-                            Foundation on the Arts and the Humanities
-                        </option>
-                        <option {% if 'NV' in content.Organization %}selected="selected"{% endif %} value="NV">
-                            Department of the Navy
-                        </option>
-                        <option {% if 'OT' in content.Organization %}selected="selected"{% endif %} value="OT">Other
-                            Agencies and Independent Organizations
-                        </option>
-                        <option {% if 'ST' in content.Organization %}selected="selected"{% endif %} value="ST">
-                            Department of State
-                        </option>
-                        <option {% if 'TD' in content.Organization %}selected="selected"{% endif %} value="TD">
-                            Department of Transportation
-                        </option>
-                        <option {% if 'TR' in content.Organization %}selected="selected"{% endif %} value="TR">
-                            Department of the Treasury
-                        </option>
-                        <option {% if 'VA' in content.Organization %}selected="selected"{% endif %} value="VA">
-                            Department of Veterans Affairs
-                        </option>
+                    <select class="form-select" multiple name="organization">
+                        <option value="AG"> Department of Agriculture </option>
+                        <option value="AF"> Department of the Air Force </option>
+                        <option value="AR"> Department of the Army </option>
+                        <option value="CM"> Department of Commerce </option>
+                        <option value="FQ"> Court Services and Offender Supervision Agency for DC </option>
+                        <option value="DD"> Department of Defense </option>
+                        <option value="ED"> Department of Education </option>
+                        <option value="DN"> Department of Energy </option>
+                        <option value="EOP"> Executive Office of the President </option>
+                        <option value="GS"> General Service Administration </option>
+                        <option value="HE"> Department of Health and Human Services </option>
+                        <option value="HS"> Department of Homeland Security </option>
+                        <option value="HU"> Department of Housing and Urban Development </option>
+                        <option value="IN"> Department of the Interior </option>
+                        <option value="JL"> Judicial Branch </option>
+                        <option value="DJ"> Department of Justice </option>
+                        <option value="DL"> Department of Labor </option>
+                        <option value="LL"> Legislative Branch </option>
+                        <option value="NN"> National Aeronautics and Space Administration </option>
+                        <option value="AH"> National Foundation on the Arts and the Humanities </option>
+                        <option value="NV"> Department of the Navy </option>
+                        <option value="OT"> Other Agencies and Independent Organizations </option>
+                        <option value="ST"> Department of State </option>
+                        <option value="TD"> Department of Transportation </option>
+                        <option value="TR"> Department of the Treasury </option>
+                        <option value="VA"> Department of Veterans Affairs </option>
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
@@ -219,17 +129,14 @@
                             ?
                         </button>
                     </h2>
-                    <input type="text" class="form-control" name="JobCategoryCode"
-                           {{!-- value="{{ content.JobCategoryCode | replace(';', ' ') }}"> --}}
-                           value="">
+                    <input type="text" class="form-control" name="job_category_code" value="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
                     <h2 class="h3">Offers Relocation Assistance:</h2>
-                    <input class="form-check-input" type="checkbox" value="True" name="RelocationIndicator"
-                           {% if content.RelocationIndicator %}checked{% endif %}>
-                    <label class="form-check-label" for="RelocationIndicator">
+                    <input class="form-check-input" type="checkbox" value="True" name="relocation_indicator">
+                    <label class="form-check-label" for="relocation_indicator">
                         Yes
                     </label>
                 </div>
@@ -239,31 +146,21 @@
                             ?
                         </button>
                     </h2>
-                    <select class="form-select" multiple name="PositionScheduleTypeCode">
-                        <option {% if 'ONE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="ONE">Full-time
-                        </option>
-                        <option {% if 'TWO' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="TWO">Part-time
-                        </option>
-                        <option {% if 'THREE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="THREE">Shift work
-                        </option>
-                        <option {% if 'FOUR' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="FOUR">Intermittent
-                        </option>
-                        <option {% if 'FIVE' in content.PositionScheduleTypeCode %}selected="selected"{% endif %}
-                                value="FIVE">Multiple
-                        </option>
+                    <select class="form-select" multiple name="position_schedule_type_code">
+                        <option value="ONE">Full-time</option>
+                        <option value="TWO">Part-time</option>
+                        <option value="THREE">Shift work</option>
+                        <option value="FOUR">Intermittent</option>
+                        <option value="FIVE">Multiple</option>
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
                     <h2 class="h3">Location:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The name of where you want to search, &#013; should be in the format: Seattle, WA">
+                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The name of where you want to search, &#013; should be in the format: Seattle, WA. &#013; If multiple locatoins are entered, &#013; they should be semi-colun delineated, &#013; for example: Seattle, WA; Portland, OR">
                             ?
                         </button>
                     </h2>
-                    <input type="text" class="form-control" name="LocationName" value="{{ content.LocationName }}">
+                    <input type="text" class="form-control" name="location_name" value="">
                 </div>
                 <div class="col-lg-3 dropdown">
                     <h2 class="h3">Radius:
@@ -271,11 +168,11 @@
                             ?
                         </button>
                     </h2>
-                    <input type="Number" class="form-control" name="Radius" value="{{ content.Radius }}">
+                    <input type="Number" class="form-control" name="radius" value="">
                 </div>
             </div>
             <div class="row">
-                <input type="text" name="Page" value="{{ content.Page }}" hidden>
+                <input type="text" name="page" value="{{ content.Page }}" hidden>
                 <input type="text" name="number-of-pages" value="{{ content.number_of_pages }}" hidden>
                 <div class="col-lg-1">
                     <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="submit" value="submit">Search</button>
@@ -289,43 +186,26 @@
                     </label>                    
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-select" name="SortField">
-                        <option {% if 'default' in content.SortField %}selected="selected"{% endif %} 
-                                value="default">Sort Field
-                        </option>
-                        <option {% if 'opendate' in content.SortField %}selected="selected"{% endif %}
-                                value="opendate">Position start date
-                        </option>
-                        <option {% if 'closedate' in content.SortField %}selected="selected"{% endif %}
-                                value="closedate">Position end date
-                        </option>
-                        <option {% if 'jobtitle' in content.SortField %}selected="selected"{% endif %}
-                                value="jobtitle">Position title
-                        </option>
-                        <option {% if 'salary' in content.SortField %}selected="selected"{% endif %}
-                                value="salary">Position minimum salary
-                        </option>
-                        <option {% if 'location' in content.SortField %}selected="selected"{% endif %}
-                                value="location">Position city or military installation name
-                        </option>
-                        <option {% if 'department' in content.SortField %}selected="selected"{% endif %}
-                                value="department">Position organization name
-                        </option>
-                        <option {% if 'title' in content.SortField %}selected="selected"{% endif %}
-                                value="title">Position title
-                        </option>
+                    <select class="form-select" name="sort_field">
+                        <option value="default">Sort Field</option>
+                        <option value="opendate">Position start date</option>
+                        <option value="closedate">Position end date</option>
+                        <option value="jobtitle">Position title</option>
+                        <option value="salary">Position minimum salary</option>
+                        <option value="location">Position city or military installation name</option>
+                        <option value="department">Position organization name</option>
+                        <option value="title">Position title</option>
                     </select>
                     <h3 class="h5">Sort Order:</h3>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="SortDirection" id="Asc" value="Asc"
-                        {{!-- {% if 'Asc' in content.SortDirection %}checked{% endif %}> --}}
+                        <input class="form-check-input" type="radio" name="sort_direction" id="Asc" value="Asc"
                         checked>
                         <label class="form-check-label" for="Asc">
                             Ascending
                         </label>
                         </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="SortDirection" id="Desc" value="Desc"
+                        <input class="form-check-input" type="radio" name="sort_direction" id="Desc" value="Desc"
                         {% if 'Desc' in content.SortDirection %}checked{% endif %}>
                         <label class="form-check-label" for="Desc">
                             Descending
@@ -343,7 +223,6 @@
                 </div>
             </div>
             <div class="row map" id="map">
-                {{!-- {{ content.map|safe }} --}}
                 <div class="button-group">
                     Page:
                     <a href="{{ content.first }}" class="btn btn-sm btn-nav"><<</a>
