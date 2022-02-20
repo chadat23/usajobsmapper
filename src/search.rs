@@ -1,13 +1,10 @@
-// extern use js;
-// use json as js;
-// use json::parse;
-
 use std::collections::HashMap;
 use std::fmt::format;
 use std::fmt;
 use std::str::FromStr;
 
 use rocket::Request;
+use rocket::State;
 // use rocket::response::Redirect;
 
 use rocket::http::hyper::body::Buf;
@@ -15,8 +12,6 @@ use rocket_dyn_templates::{Template, handlebars, context};
 
 use rocket::serde::{Serialize, Deserialize};
 use rocket::serde::json::{Value};
-// use rocket::serde::json as js;
-use figment::{Figment, providers::{Format, Toml, }};
 
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
@@ -27,6 +22,11 @@ use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT, CONTENT_TYPE};
 use reqwest::{ Method, Url, header };
 
+#[derive(Debug)]
+pub struct UsaJobsCredentials {
+    pub apikey: String,
+    pub useragent: String,
+}
 
 #[derive(Debug, FromForm, Serialize)]
 pub struct Query<'v> {
@@ -165,23 +165,7 @@ pub fn index() -> Template {
 }
 
 #[post("/query", data = "<form>")]
-pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
-    let figment = rocket::Config::figment()
-        .merge(Toml::file("config.toml"));
-
-    let apikey = String::from(figment.find_value("usajobs").unwrap()                             
-                             .as_dict().unwrap()
-                             .get("APIKEY").unwrap()
-                             .as_str().unwrap());
-    let useragent = String::from(figment.find_value("usajobs").unwrap()
-                                .as_dict().unwrap()
-                                .get("USERAGENT").unwrap()
-                                .as_str().unwrap());
-    let username = String::from(figment.find_value("geonames").unwrap()
-                               .as_dict().unwrap()
-                               .get("USERNAME").unwrap()
-                               .as_str().unwrap());
-
+pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>, usajobs_credentials: &State<UsaJobsCredentials>) -> Value {
     let query = match form.value {
         Some(ref submission) => {
             submission
@@ -193,37 +177,25 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>) -> Value {
     };
 
     let url = make_url(query);
-
-    let res = request_jobs(url, apikey, useragent);
-    let res = res.await.text().await.unwrap().replace(r#"\""#, "");
+    let resp = request_jobs(url, usajobs_credentials);
+    let resp = resp.await.text().await.unwrap().replace(r#"\""#, "");
     
-    let positions = get_jobs(res, query.page.parse::<u32>().unwrap());
+    let positions = get_jobs(resp, query.page.parse::<u32>().unwrap());
+
+    // let template = match form.value {
+    //     Some(ref submission) => {
+    //         println!("submission: {:#?}", submission);
+    //         Template::render("search/index", &form.context)
+    //     }
+    //     None => {
+    //         println!(" not submission: {:#?}", "lkj");
+    //         Template::render("search/index", &form.context)
+    //     }
+    // };
 
     println!("{:#?}", positions);
-
-    // // let template = match form.value {
-    // //     Some(ref submission) => {
-    // //         println!("submission: {:#?}", submission);
-    // //         Template::render("search/index", &form.context)
-    // //     }
-    // //     None => {
-    // //         println!(" not submission: {:#?}", "lkj");
-    // //         Template::render("search/index", &form.context)
-    // //     }
-    // // };
-
-    let sub = match form.value {
-        Some(ref submission) => {
-            submission
-        }
-        None => {
-            panic!("oops")
-        }
-        
-    };
     
-    serde_json::json!(sub)
-    // res
+    serde_json::json!(positions)
 }
 
 #[get("/hello/<name>")]
@@ -290,23 +262,22 @@ pub fn customize(hbs: &mut Handlebars) {
     "#).expect("valid HBS template");
 }
 
-async fn request_jobs(url: String, apikey: String, useragent: String) -> reqwest::Response {
-    let HOST = "data.usajobs.gov";
+async fn request_jobs(url: String, config: &State<UsaJobsCredentials>) -> reqwest::Response {
+    const HOST: &str = "data.usajobs.gov";
 
     let client = reqwest::Client::new();
 
-    let res = client
+    let req = client
         .get(url)
         .header("Host", HOST)
-        .header("User-Agent", useragent)
-        .header("Authorization-Key", apikey);
+        .header("User-Agent", config.useragent.as_str())
+        .header("Authorization-Key", config.apikey.as_str());
 
-    res.send().await.unwrap()
+    req.send().await.unwrap()
 }
 
 fn make_url(query: &Query) -> String {
-    // let HOST = "data.usajobs.gov";
-    let BASE_URL = "https://data.usajobs.gov/api/search?";
+    const BASE_URL: &str = "https://data.usajobs.gov/api/search?";
 
     let mut payload: String = String::from(BASE_URL);
 
@@ -381,14 +352,14 @@ fn make_url(query: &Query) -> String {
     payload.replace(" ", "%20")
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct Location {
     name: String,
     latitude: String,
     longitude: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct Position {
     title: String,
     url: String,
@@ -399,7 +370,7 @@ pub struct Position {
     high_grade: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct SearchResult {
     total_search_results: u32,
     current_page: u32,
