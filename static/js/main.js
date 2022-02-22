@@ -85,10 +85,10 @@ function makeMap(positions, continental_us) {
 
     var location_labels = makeLabels(locations);
 
-    var markers = []
     for (const location of location_labels) {
-        console.log(location)
-        markers.push(L.marker(location["lat_long"]).addTo(map));
+        let marker = L.marker(location["lat_long"]).addTo(map);
+        marker.bindTooltip(location["tooltip"]);
+        marker.bindPopup(location["popup"]);
     }
 }
 
@@ -108,12 +108,14 @@ function makeLabels(locations) {
 
     for (const [location_name, info] of Object.entries(locations)) {
         toolTipText = "";
+        popupText = "";
         for (const position of info[0]) {
             toolTipText += toolTip(position, location_name);
+            popupText += popup(position);
         }
-        console.log(location_labels, info);
         location_labels.push({
             "tooltip": toolTipText,
+            "popup": popupText,
             "lat_long": info[1],
         });
     }
@@ -123,6 +125,10 @@ function makeLabels(locations) {
 
 function toolTip(job, location) {
     return job.title + "<br>" + location + "<br>"
+}
+
+function popup(job) {
+    return job.url
 }
 
 makeMap([], false);
