@@ -22,49 +22,43 @@ myForm.addEventListener('submit', function (e) {
     }).then(function (response) {
         return response.json();
     }).then(function (results) {
-        // reset();
         updatePageInfo(results);
-        // console.log("returned text", results);
     }).catch(function (error) {
         console.log(error);
     })
 })
 
-// function reset() {
-//     document.getElementById("map_holder").innerHTML = '<div class="row map" id="map" style="height: 1000px;">' + 
-//     '<div class="button-group">Page:<a href="" class="btn btn-sm btn-nav"><<</a><a href="" class="btn btn-sm btn-nav"><</a>' + 
-//     '<span id="current_page"></span><a href="" class="btn btn-sm btn-nav">></a><a href="" class="btn btn-sm btn-nav">>>' + 
-//     '</a>{{ content.number_of_pages }}</div></div>'
-// }
-
-function makeMap(jobs, positions, continental_us) {
+function makeMap(positions, continental_us) {
 
     var sw = [min_lat, min_long];
     var ne = [max_lat, max_long];
 
-    var locations = [];
+    var locations = {};
+    var lat = [];
+    var long = [];
     if (positions.length > 0) {
-        if (continental_us) {
-            for (const position of positions) {
-                for (const location of position.locations) {
+        for (const position of positions) {
+            for (const location of position.locations) {
+                if (continental_us) {
                     if (min_lat < location.latitude && location.latitude < max_lat && min_long < location.longitude && location.longitude< max_long) {
-                        locations.push(location);
+                        lat.push(parseFloat(location.latitude));
+                        long.push(parseFloat(location.longitude));
+                        if (location in locations) {
+                            locations[location.name][0].push(position);
+                        } else {
+                            locations[location.name] = [[position, ], [lat[lat.length - 1], long[long.length - 1]]];
+                        }
+                    }
+                } else {
+                        lat.push(parseFloat(location.latitude));
+                        long.push(parseFloat(location.longitude));
+                    if (location in locations) {
+                        locations[location.name][0].push(position);
+                    } else {
+                        locations[location.name] = [[position, ], [lat[lat.length - 1], long[long.length - 1]]];
                     }
                 }
             }
-        } else {
-            for (const position of positions) {
-                for (const location of position.locations) {
-                    locations.push(location);
-                }
-            }
-        }
-
-        var lat = [];
-        var long = [];
-        for (const location of locations) {
-            lat.push(parseFloat(location.latitude));
-            long.push(parseFloat(location.longitude));
         }
 
         sw = [Math.min(...lat), Math.min(...long)];
@@ -89,11 +83,13 @@ function makeMap(jobs, positions, continental_us) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', 
         {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-    // for (const job in jobs) {
-    //     var marker = L.marker(job[0], job[1]);
+    var location_labels = makeLabels(locations);
 
-    //     markers.addLayer(marker);
-    // }
+    var markers = []
+    for (const location of location_labels) {
+        console.log(location)
+        markers.push(L.marker(location["lat_long"]).addTo(map));
+    }
 }
 
 function updatePageInfo(pageInfo) {
@@ -104,27 +100,29 @@ function updatePageInfo(pageInfo) {
     document.getElementById("total_returned_jobs").textContent = pageInfo.positions.length;
     document.getElementById("total_returned_locations").textContent = pageInfo.total_returned_locations;
 
-    let jobs = makeLabels(pageInfo.positions);
-
-    makeMap(jobs, pageInfo.positions, pageInfo.continental_us);
+    makeMap(pageInfo.positions, pageInfo.continental_us);
 }
 
-function makeLabels(positions) {
-    var locations = {};
+function makeLabels(locations) {
+    var location_labels = [];
 
-    for (const job in positions) {
-        for (const location in job.locations) {
-            if ((location.name in locations) == false) {
-                locations[location.name] = [toolTip(job, location), [parseFloat(location.latitude), parseFloat(location.longitude)]];
-            }
+    for (const [location_name, info] of Object.entries(locations)) {
+        toolTipText = "";
+        for (const position of info[0]) {
+            toolTipText += toolTip(position, location_name);
         }
+        console.log(location_labels, info);
+        location_labels.push({
+            "tooltip": toolTipText,
+            "lat_long": info[1],
+        });
     }
 
-    locations
+    return location_labels
 }
 
 function toolTip(job, location) {
-    let tip = job.title + "<br>" + location + "<br>"
+    return job.title + "<br>" + location + "<br>"
 }
 
 makeMap([], false);
