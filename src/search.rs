@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use rocket::form::{Form, Contextual, FromForm, FromFormField};
 use rocket::Request;
 use rocket::serde::json::{Value};
@@ -8,15 +10,14 @@ use rocket_dyn_templates::{Template, handlebars, context};
 use self::handlebars::{Handlebars, JsonRender};
 // use rocket::response::content::RawHtml;
 
-use crate::setup::UsaJobsCredentials;
-
-
 mod query;
 use crate::search::query::make_query;
 use query::{ Query };
 
 mod parse_utils;
-use crate::search::parse_utils::parse_request_into_jobs;
+
+use crate::search::parse_utils::{ parse_request_into_jobs, update_lat_long };
+use crate::setup::{ Places, UsaJobsCredentials };
 
 #[get("/")]
 pub fn index() -> Template {
@@ -26,7 +27,9 @@ pub fn index() -> Template {
 }
 
 #[post("/query", data = "<form>")]
-pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>, usajobs_credentials: &State<UsaJobsCredentials>) -> Value {
+pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>, 
+    usajobs_credentials: &State<UsaJobsCredentials>,
+    places: &State<HashMap<String, (String, String)>>) -> Value {
     // let query: Query = parse_form(form);
     let query = match form.value {
         Some(ref submission) => {
@@ -38,20 +41,11 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>, usajobs_credentia
     };
 
     let jobs_request = make_query(&query, usajobs_credentials);
-    let jobs_request = jobs_request.await.replace("\"", "");
+    let jobs_request = jobs_request.await;//.replace("\"", "");
     
     let positions = parse_request_into_jobs(jobs_request, &query);
 
-    // let template = match form.value {
-    //     Some(ref submission) => {
-    //         println!("submission: {:#?}", submission);
-    //         Template::render("search/index", &form.context)
-    //     }
-    //     None => {
-    //         println!(" not submission: {:#?}", "lkj");
-    //         Template::render("search/index", &form.context)
-    //     }
-    // };
+    let positions = update_lat_long(positions, places);
 
     println!("{:#?}", positions);
     

@@ -5,14 +5,14 @@ use std::io::{prelude::*, BufReader};
 use figment::{Figment, providers::{Format, Toml, }};
 
 #[derive(Debug)]
-struct Location {
+pub struct Places {
     city: String,
     lat: String,
     long: String,
     state: String,
 }
 
-impl Location {
+impl Places {
     fn full_name(&self) -> String {
         format!("{}, {}", self.city, self.state)
     }
@@ -156,7 +156,7 @@ pub fn make_locations(file: &str) -> HashMap<String, (String, String)> {
     locations
 }
 
-fn parse_location(line: &str) -> Option<Location> {
+fn parse_location(line: &str) -> Option<Places> {
     let mut line= line.split("\t");
 
     let city = String::from(line.nth(1).unwrap().trim());
@@ -170,7 +170,7 @@ fn parse_location(line: &str) -> Option<Location> {
 
     match abrev_to_full().get(&state).cloned() {
         Some(state) => {
-            Some(Location { city, lat, long, state })
+            Some(Places { city, lat, long, state })
         },
         None => None,
     }

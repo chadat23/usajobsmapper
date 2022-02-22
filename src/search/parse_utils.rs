@@ -1,4 +1,7 @@
+use std::collections::HashMap;
+
 use rocket::serde::{Serialize, Deserialize};
+use rocket::State;
 
 use crate::search::query::Query;
 
@@ -30,6 +33,7 @@ pub struct SearchResult {
 
 pub fn parse_request_into_jobs(response: String, current_page: &Query) -> SearchResult {
     let current_page = current_page.page.parse::<u32>().unwrap();
+
     let response = json::parse(response.as_str()).unwrap();
 
     let search_result = &response["SearchResult"];
@@ -70,4 +74,25 @@ pub fn parse_request_into_jobs(response: String, current_page: &Query) -> Search
         number_of_pages: search_result["UserArea"]["NumberOfPages"].pretty(0).replace("\"", "").parse::<u32>().unwrap(),
         positions,
     }
+}
+
+pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String, (String, String)>>) -> SearchResult {
+    for position in &mut results.positions {
+        for location in &mut position.locations {
+            let name = location.name.to_lowercase();
+
+            match places.get(&name).cloned() {
+                Some((lat, long)) => {
+                    // let a = location.latitude;
+                    location.latitude = lat;
+                    location.longitude = long;
+                },
+                None => {},
+            }
+        }
+    }
+
+    println!("{:?}", results);
+
+    results
 }
