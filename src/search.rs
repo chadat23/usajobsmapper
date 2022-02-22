@@ -47,7 +47,7 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>,
 
     let positions = update_lat_long(positions, places);
 
-    println!("{:#?}", positions);
+    println!("about to jadon /////////////// {:#?}", positions);
     
     serde_json::json!(positions)
 }

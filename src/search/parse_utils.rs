@@ -98,7 +98,7 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
         }
     }
 
-    println!("{:?}", results);
+    // println!("{:?}", results);
 
     results
 }
