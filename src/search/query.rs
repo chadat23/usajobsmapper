@@ -129,7 +129,7 @@ pub struct Query<'v> {
     position_schedule_type_code: Vec<PositionScheduleTypeCode>,
     location_name: &'v str,
     radius: &'v str,
-    continental_us: bool,
+    pub continental_us: bool,
     sort_field: SortField,
     sort_direction: SortDirection,
     pub page: &'v str,

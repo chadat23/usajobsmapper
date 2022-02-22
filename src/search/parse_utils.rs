@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{ HashMap, HashSet };
 
 use rocket::serde::{Serialize, Deserialize};
 use rocket::State;
@@ -29,10 +29,12 @@ pub struct SearchResult {
     current_page: u32,
     number_of_pages: u32,
     positions: Vec<Position>,
+    total_returned_locations: usize,
+    continental_us: bool,
 }
 
-pub fn parse_request_into_jobs(response: String, current_page: &Query) -> SearchResult {
-    let current_page = current_page.page.parse::<u32>().unwrap();
+pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult {
+    // let current_page = query.page.parse::<u32>().unwrap();
 
     let response = json::parse(response.as_str()).unwrap();
 
@@ -43,6 +45,7 @@ pub fn parse_request_into_jobs(response: String, current_page: &Query) -> Search
     let search_result_items = &search_result["SearchResultItems"];
 
     let mut positions: Vec<Position> = Vec::with_capacity(search_result_count.pretty(1).parse::<usize>().unwrap());
+    let mut position_set: HashSet<String> = HashSet::new();
     for item in search_result_items.members() {
         let matched_object_descriptor = &item["MatchedObjectDescriptor"];
         let details = &matched_object_descriptor["UserArea"]["Details"];
@@ -50,8 +53,10 @@ pub fn parse_request_into_jobs(response: String, current_page: &Query) -> Search
         let position_locations = &matched_object_descriptor["PositionLocation"];        
         let mut locations: Vec<Location> = Vec::with_capacity(position_locations.len());
         for location in position_locations.members() {
+            let name = location["LocationName"].pretty(0).replace("\"", "");
+            position_set.insert(name.clone());
             locations.push(Location {
-                name: location["LocationName"].pretty(0).replace("\"", ""),
+                name,
                 latitude: location["LocationName"].pretty(0).replace("\"", ""),
                 longitude: location["LocationName"].pretty(0).replace("\"", ""),
             });
@@ -70,8 +75,10 @@ pub fn parse_request_into_jobs(response: String, current_page: &Query) -> Search
 
     SearchResult {
         total_search_results: search_result_count_all.pretty(0).replace("\"", "").parse::<u32>().unwrap(),
-        current_page,
         number_of_pages: search_result["UserArea"]["NumberOfPages"].pretty(0).replace("\"", "").parse::<u32>().unwrap(),
+        total_returned_locations: position_set.len(),
+        current_page: query.page.parse::<u32>().unwrap(),
+        continental_us: query.continental_us,
         positions,
     }
 }
@@ -83,7 +90,6 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
 
             match places.get(&name).cloned() {
                 Some((lat, long)) => {
-                    // let a = location.latitude;
                     location.latitude = lat;
                     location.longitude = long;
                 },
