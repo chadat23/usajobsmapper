@@ -19,9 +19,10 @@ myForm.addEventListener('submit', function (e) {
         method: 'post',
         body: formData,
     }).then(function (response) {
-        return response.text();
-    }).then(function (text) {
-        console.log("returned text", text);
+        return response.json();
+    }).then(function (results) {
+        updatePageInfo(results);
+        console.log("returned text", results);
     }).catch(function (error) {
         console.log(error);
     })
@@ -37,6 +38,12 @@ function makeMap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
     console.log('loaded');
+}
+
+function updatePageInfo(pageInfo) {
+    document.getElementById("page").textContent = pageInfo.current_page;
+    document.getElementById("number-of-pages").textContent = pageInfo.number_of_pages;
+    document.getElementById("total-search-results").textContent = pageInfo.positions.length;
 }
 
 makeMap();

@@ -172,8 +172,8 @@
                 </div>
             </div>
             <div class="row">
-                <input type="text" name="page" value="1" hidden>
-                <input type="text" name="number-of-pages" value="{{ content.number_of_pages }}" hidden>
+                <input type="text" name="page" id="page" value="1" hidden>
+                <input type="text" name="number-of-pages" id="number-of-pages" value="" hidden>
                 <div class="col-lg-1">
                     <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="submit" value="submit">Search</button>
                     <a href="/search" class="btn btn-primary btn-sm">Reset</a>
@@ -213,9 +213,10 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    Total search results: {{ content.total_results }}
+                    {{!-- Total search results: <span id="total-search-results"></span> --}}
+                    Total search results: 
                     <br>
-                    Total returned jobs: {{ content.returned_results }}
+                    Total returned jobs: <span id="total-search-results"></span>
                     <br>
                     Total job locations: {{ content.total_jobs }}
                     <br>
