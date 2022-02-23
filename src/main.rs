@@ -27,7 +27,7 @@ fn rocket() -> _ {
         // .manage(make_locations("US copy.txt"))
         .manage(make_locations("US.txt"))
         .mount("/", routes![index])
-        .mount("/search", routes![search::index, search::notes, search::about, search::search])
+        .mount("/search", routes![search::index, search::notes, search::about, search::search, search::locations])
         .mount("/static", FileServer::from("static/"))
         .register("/search", catchers![search::not_found])
         .attach(Template::custom(|engines| {

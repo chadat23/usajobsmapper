@@ -7,34 +7,35 @@ use crate::search::query::Query;
 
 #[derive(Debug, Serialize)]
 pub struct Location {
-    name: String,
-    latitude: String,
-    longitude: String,
+    pub name: String,
+    pub latitude: String,
+    pub longitude: String,
 }
 
 #[derive(Debug, Serialize)]
 pub struct Position {
-    title: String,
-    url: String,
-    locations: Vec<Location>,
-    orginization: String,
-    department: String,
-    low_grade: String,
-    high_grade: String,
+    pub title: String,
+    pub url: String,
+    pub id: String,
+    pub locations: Vec<Location>,
+    pub orginization: String,
+    pub department: String,
+    pub low_grade: String,
+    pub high_grade: String,
 }
 
 #[derive(Debug, Serialize)]
 pub struct SearchResult {
-    total_search_results: u32,
-    current_page: u32,
-    number_of_pages: u32,
-    positions: Vec<Position>,
-    total_returned_locations: usize,
-    continental_us: bool,
+    pub total_search_results: u32,
+    pub current_page: u32,
+    pub number_of_pages: u32,
+    pub positions: Vec<Position>,
+    pub total_returned_locations: usize,
+    pub continental_us: bool,
 }
 
 pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult {
-    // let current_page = query.page.parse::<u32>().unwrap();
+    // https://developer.usajobs.gov/API-Reference/GET-api-Search
 
     let response = json::parse(response.as_str()).unwrap();
 
@@ -65,6 +66,7 @@ pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult 
         positions.push(Position {
             title: matched_object_descriptor["PositionTitle"].pretty(0).replace("\"", ""),
             url: matched_object_descriptor["PositionURI"].pretty(0).replace("\"", ""),
+            id: matched_object_descriptor["PositionID"].pretty(0).replace("\"", ""),
             locations,
             orginization: matched_object_descriptor["OrganizationName"].pretty(0).replace("\"", ""),
             department: matched_object_descriptor["DepartmentName"].pretty(0).replace("\"", ""),

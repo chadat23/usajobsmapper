@@ -1,0 +1,50 @@
+{{#*inline "head"}}
+  <title>USAJOBSmapper</title>
+{{/inline}}
+
+{{#*inline "body"}}
+
+    <nav class="navbar">
+        <div class="container-xl">
+            <div>
+                <a href="/search" class="h1 mapper">USAJOBSmapper</a> 
+            </div>
+            <div>
+                <a href="/search/notes">Notes</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-xl my-5">
+        <span id="map_holder">
+            <div class="row map" id="map" style="height: 1000px;">
+            </div>
+        </span>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+
+    {{!-- {% if content.scrol_to_anchor %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.location.hash = '#{{ content.scrol_to_anchor }}';
+        });
+    </script>
+    {% endif %} --}}
+
+{{!-- <section id="hello">
+  <h1>Hi {{ name }}!</h1>
+  <h3>Here are your items:</h3>
+  <ul>
+    {{#each items}}
+      <li>{{ this }}</li>
+    {{/each}}
+  </ul>
+</section>
+
+<section id="custom-helper">
+  <p>Try going to <a href="/search/hello/Your%20Name">/search/hello/Your Name</a>.</p>
+  <p>Also, check {{ wow "this" }} (custom helper) out!</p>
+</section> --}}
+
+{{/inline}}
+{{~> (parent)~}}

@@ -65,7 +65,7 @@ function makeMap(positions, continental_us) {
         ne = [Math.max(...lat), Math.max(...long)];
     }
 
-    console.log(sw, ne);
+    // console.log(sw, ne);
 
     var container = L.DomUtil.get('map'); 
     if(container != null){ 
@@ -100,6 +100,7 @@ function updatePageInfo(pageInfo) {
     document.getElementById("total_returned_jobs").textContent = pageInfo.positions.length;
     document.getElementById("total_returned_locations").textContent = pageInfo.total_returned_locations;
 
+    // console.log(pageInfo);
     makeMap(pageInfo.positions, pageInfo.continental_us);
 }
 
@@ -124,11 +125,36 @@ function makeLabels(locations) {
 }
 
 function toolTip(job, location) {
-    return job.title + "<br>" + location + "<br>"
+
+    if (job.low_grade == job.high_grade) {
+        high_grade = "";
+    } else {
+        high_grade = " - " + job.high_grade;
+    }
+
+    return job.title + 
+        "<br>" + 
+        location + 
+        "<br>" + 
+        "Grade: " + job.low_grade + high_grade + 
+        "<br>"
 }
 
 function popup(job) {
-    return job.url
+    return job.title + 
+        '<br>' + 
+        '<a href="' + job.url + '" target="_blank">' + job.url + '</a>' + 
+        '<br>' + 
+        '<button type="button" class="btn btn-link" name="location" value="'  + 
+        job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
+        '<br>'
+}
+
+function get_locations(id) {
+    document.getElementById("search_form").method = "post";
+    document.getElementById("search_form").action = "/search/locations/" + id;
+    
+    document.search_form.submit();
 }
 
 makeMap([], false);

@@ -2,12 +2,15 @@ use std::collections::HashMap;
 
 use rocket::form::{Form, Contextual, FromForm, FromFormField};
 use rocket::Request;
+use rocket::response::Redirect;
 use rocket::serde::json::{Value};
 use rocket::State;
 
 use rocket_dyn_templates::{Template, handlebars, context};
+use serde::__private::de::Content;
 
 use self::handlebars::{Handlebars, JsonRender};
+use self::parse_utils::SearchResult;
 // use rocket::response::content::RawHtml;
 
 mod query;
@@ -16,7 +19,7 @@ use query::{ Query };
 
 mod parse_utils;
 
-use crate::search::parse_utils::{ parse_request_into_jobs, update_lat_long };
+use crate::search::parse_utils::{ parse_request_into_jobs, update_lat_long, Position, Location };
 use crate::setup::{ Places, UsaJobsCredentials };
 
 #[get("/")]
@@ -42,14 +45,97 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>,
 
     let jobs_request = make_query(&query, usajobs_credentials);
     let jobs_request = jobs_request.await;//.replace("\"", "");
-    
+
     let positions = parse_request_into_jobs(jobs_request, &query);
 
     let positions = update_lat_long(positions, places);
+    
+    serde_json::json!(positions)
+}
+
+#[post("/locations/<job_id>", data = "<form>")]
+pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>, 
+    job_id: String, 
+    usajobs_credentials: &State<UsaJobsCredentials>,
+    places: &State<HashMap<String, (String, String)>>) -> Template {
+
+    // let query: Query = parse_form(form);
+    let query = match form.value {
+        Some(ref submission) => {
+            submission
+        }
+        None => {
+            panic!("oops")
+        }
+    };
+
+    let jobs_request = make_query(&query, usajobs_credentials);
+    let jobs_request = jobs_request.await;//.replace("\"", "");
+
+    let mut positions = parse_request_into_jobs(jobs_request, &query);
+
+    // let mut pos: Vec<Position> = Vec::new();
+    let mut pos: Vec<Position> = Vec::with_capacity(1);
+    let mut result: SearchResult;
+    let mut index = 0_usize;
+    for (i, position) in &mut positions.positions.iter().enumerate() {
+        if position.id == job_id {
+            index = i;
+            break;
+            // pos = Vec::from([*position]);
+        }
+    }
+
+    let mut locations: Vec<Location> = Vec::new();
+    for position in positions.positions.iter() {
+        for location in position.locations.iter() {
+            locations.push(Location {
+                name: location.name.as_str().to_string(),
+                latitude: location.latitude.as_str().to_string(),
+                longitude: location.longitude.as_str().to_string(),
+            });
+        }
+    }
+
+    let pos = &positions.positions[index];
+    
+
+    let position = Position {
+        title: pos.title.as_str().to_string(),
+        url: pos.url.as_str().to_string(),
+        id: pos.id.as_str().to_string(),
+        locations: locations,
+        orginization: pos.orginization.as_str().to_string(),
+        department: pos.department.as_str().to_string(),
+        low_grade: pos.low_grade.as_str().to_string(),
+        high_grade: pos.high_grade.as_str().to_string(),
+    };
+
+    let result = SearchResult {
+        total_search_results: 0,
+        current_page: 0,
+        number_of_pages: 0,
+        positions: Vec::from([position]),
+        total_returned_locations: 0,
+        continental_us: positions.continental_us,
+    };
+
+    // positions.positions = Vec::from([positions.positions[index]]);
+
+    // let position = positions.positions[index];
+
+
+    // positions.positions = pos;
+
+    let positions = update_lat_long(result, places);
 
     println!("about to jadon /////////////// {:#?}", positions);
     
-    serde_json::json!(positions)
+    Template::render("search/locations", context! {
+        parent: "search/base",
+        // positions: positions,
+    })
+    // Redirect::to(uri!("/search/notes"))
 }
 
 #[get("/hello/<name>")]
