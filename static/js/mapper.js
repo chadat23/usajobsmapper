@@ -13,7 +13,6 @@ function makeMap(positions, continental_us) {
     var long = [];
     if (positions.length > 0) {
         for (const position of positions) {
-            console.log(typeof positions);
             for (const location of position.locations) {
                 if (continental_us) {
                     if (min_lat < location.latitude && location.latitude < max_lat && min_long < location.longitude && location.longitude< max_long) {
@@ -22,7 +21,7 @@ function makeMap(positions, continental_us) {
                         if (location in locations) {
                             locations[location.name][0].push(position);
                         } else {
-                            locations[location.name] = [[position, ], [lat[lat.length - 1], long[long.length - 1]]];
+                            locations[location.name] = [[position, ], [[lat[lat.length - 1], long[long.length - 1]], location.found]];
                         }
                     }
                 } else {
@@ -31,7 +30,7 @@ function makeMap(positions, continental_us) {
                     if (location in locations) {
                         locations[location.name][0].push(position);
                     } else {
-                        locations[location.name] = [[position, ], [lat[lat.length - 1], long[long.length - 1]]];
+                        locations[location.name] = [[position, ], [[lat[lat.length - 1], long[long.length - 1]], location.found]];
                     }
                 }
             }
@@ -57,25 +56,9 @@ function makeMap(positions, continental_us) {
         let marker = L.marker(location["lat_long"]).addTo(map);
         marker.bindTooltip(location["tooltip"]);
         marker.bindPopup(location["popup"]);
-    }
-}
-
-function makeLabels(locations) {
-    var location_labels = [];
-
-    for (const [location_name, info] of Object.entries(locations)) {
-        toolTipText = "";
-        popupText = "";
-        for (const position of info[0]) {
-            toolTipText += toolTip(position, location_name);
-            popupText += popup(position);
+        if (!location["found"]) {
+            marker._icon.classList.add("huechange");
         }
-        location_labels.push({
-            "tooltip": toolTipText,
-            "popup": popupText,
-            "lat_long": info[1],
-        });
     }
-
-    return location_labels
 }
+

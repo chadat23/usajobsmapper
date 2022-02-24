@@ -215,7 +215,6 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    {{!-- Total search results: <span id="total-search-results"></span> --}}
                     Total search results: <span id="total_search_results"></span>
                     <br>
                     Total returned jobs: <span id="total_returned_jobs"></span>
@@ -227,16 +226,17 @@
             </div>
             <span id="map_holder">
                 <div class="row map" id="map" style="height: 1000px;">
-                    <div class="button-group">
-                        Page:
-                        <a href="{{ content.first }}" class="btn btn-sm btn-nav"><<</a>
-                        <a href="{{ content.previous }}" class="btn btn-sm btn-nav"><</a>
-                        {{ content.Page }}
-                        <a href="{{ content.next }}" class="btn btn-sm btn-nav">></a>
-                        <a href="{{ content.last }}" class="btn btn-sm btn-nav">>></a>
-                        of: {{ content.number_of_pages }}
-                    </div>
+                    
                 </div>
+                <div class="button-group">
+                        Page:
+                        <input type="button" class="btn btn-sm btn-link" onclick="first_page()" value="<<">
+                        <input type="button" class="btn btn-sm btn-link" onclick="previous_page()" value="<">
+                        <span id="page_number"></span>
+                        <input type="button" class="btn btn-sm btn-link" onclick="next_page()" value=">">
+                        <input type="button" class="btn btn-sm btn-link" onclick="last_page()" value=">>">
+                        of: <span id="total_pages"></span>
+                    </div>
             </span>
         </form>
     </div>

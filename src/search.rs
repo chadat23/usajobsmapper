@@ -117,6 +117,7 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
             name: location.name.as_str().to_string(),
             latitude: location.latitude.as_str().to_string(),
             longitude: location.longitude.as_str().to_string(),
+            found: true,
         });
     }
 

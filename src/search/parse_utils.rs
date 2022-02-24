@@ -10,6 +10,7 @@ pub struct Location {
     pub name: String,
     pub latitude: String,
     pub longitude: String,
+    pub found: bool,
 }
 
 #[derive(Debug, Serialize)]
@@ -60,6 +61,7 @@ pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult 
                 name,
                 latitude: location["LocationName"].pretty(0).replace("\"", ""),
                 longitude: location["LocationName"].pretty(0).replace("\"", ""),
+                found: true,
             });
         }
 
@@ -95,7 +97,11 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
                     location.latitude = lat;
                     location.longitude = long;
                 },
-                None => {},
+                None => {
+                    location.latitude = (44.9672433944).to_string();
+                    location.longitude = (-103.7715563417).to_string();
+                    location.found = false;
+                },
             }
         }
     }
