@@ -8,6 +8,7 @@ use rocket::State;
 
 use rocket_dyn_templates::{Template, handlebars, context};
 use serde::__private::de::Content;
+use serde_json::json;
 
 use self::handlebars::{Handlebars, JsonRender};
 use self::parse_utils::SearchResult;
@@ -49,6 +50,33 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>,
     let positions = parse_request_into_jobs(jobs_request, &query);
 
     let positions = update_lat_long(positions, places);
+
+    // let positions = SearchResult {
+    //     total_search_results: 1,
+    //     current_page: 1,
+    //     number_of_pages: 1,
+    //     positions: Vec::from([Position {
+    //         title: "Civil Engineer".to_string(),
+    //         url: "https://www.usajobs.gov:443/GetJob/ViewDetails/634102300".to_string(),
+    //         id: "12345".to_string(),
+    //         locations: Vec::from([
+    //             Location {
+    //                 name: "Cheboygan, Michigan".to_string(),
+    //                 latitude: "45.64696".to_string(),
+    //                 longitude: "-84.47448".to_string(),},
+    //             Location {
+    //                 name: "Lakewood, Colorado".to_string(),
+    //                 latitude: "39.70471".to_string(),
+    //                 longitude: "-105.08137".to_string(),
+    //             }]),
+    //         orginization: "NPS".to_string(),
+    //         department: "Department of the interior".to_string(),
+    //         low_grade: "7".to_string(),
+    //         high_grade: "8".to_string(),
+    //     }]),
+    //     total_returned_locations: 2,
+    //     continental_us: true,
+    // };
     
     serde_json::json!(positions)
 }
@@ -59,7 +87,7 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
     usajobs_credentials: &State<UsaJobsCredentials>,
     places: &State<HashMap<String, (String, String)>>) -> Template {
 
-    // let query: Query = parse_form(form);
+    // // let query: Query = parse_form(form);
     let query = match form.value {
         Some(ref submission) => {
             submission
@@ -70,35 +98,29 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
     };
 
     let jobs_request = make_query(&query, usajobs_credentials);
-    let jobs_request = jobs_request.await;//.replace("\"", "");
+    let jobs_request = jobs_request.await;
 
-    let mut positions = parse_request_into_jobs(jobs_request, &query);
+    let positions = parse_request_into_jobs(jobs_request, &query);
 
-    // let mut pos: Vec<Position> = Vec::new();
-    let mut pos: Vec<Position> = Vec::with_capacity(1);
-    let mut result: SearchResult;
     let mut index = 0_usize;
     for (i, position) in &mut positions.positions.iter().enumerate() {
         if position.id == job_id {
             index = i;
             break;
-            // pos = Vec::from([*position]);
         }
     }
 
-    let mut locations: Vec<Location> = Vec::new();
-    for position in positions.positions.iter() {
-        for location in position.locations.iter() {
-            locations.push(Location {
-                name: location.name.as_str().to_string(),
-                latitude: location.latitude.as_str().to_string(),
-                longitude: location.longitude.as_str().to_string(),
-            });
-        }
+    let job_locations = &positions.positions[index].locations;
+    let mut locations: Vec<Location> = Vec::with_capacity(job_locations.len());
+    for location in job_locations.iter() {
+        locations.push(Location {
+            name: location.name.as_str().to_string(),
+            latitude: location.latitude.as_str().to_string(),
+            longitude: location.longitude.as_str().to_string(),
+        });
     }
 
-    let pos = &positions.positions[index];
-    
+    let pos = &positions.positions[index];    
 
     let position = Position {
         title: pos.title.as_str().to_string(),
@@ -120,22 +142,40 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
         continental_us: positions.continental_us,
     };
 
-    // positions.positions = Vec::from([positions.positions[index]]);
-
-    // let position = positions.positions[index];
-
-
-    // positions.positions = pos;
-
     let positions = update_lat_long(result, places);
 
-    println!("about to jadon /////////////// {:#?}", positions);
+    // let positions = SearchResult {
+    //     total_search_results: 1,
+    //     current_page: 1,
+    //     number_of_pages: 1,
+    //     positions: Vec::from([Position {
+    //         title: "Civil Engineer".to_string(),
+    //         url: "https://www.usajobs.gov:443/GetJob/ViewDetails/634102300".to_string(),
+    //         id: "12345".to_string(),
+    //         locations: Vec::from([
+    //             Location {
+    //                 name: "Cheboygan, Michigan".to_string(),
+    //                 latitude: "45.64696".to_string(),
+    //                 longitude: "-84.47448".to_string(),},
+    //             Location {
+    //                 name: "Lakewood, Colorado".to_string(),
+    //                 latitude: "39.70471".to_string(),
+    //                 longitude: "-105.08137".to_string(),
+    //             }]),
+    //         orginization: "NPS".to_string(),
+    //         department: "Department of the interior".to_string(),
+    //         low_grade: "7".to_string(),
+    //         high_grade: "8".to_string(),
+    //     }]),
+    //     total_returned_locations: 2,
+    //     continental_us: true,
+    // };
     
     Template::render("search/locations", context! {
         parent: "search/base",
-        // positions: positions,
+        positions: format!("{:?}", json!(positions.positions).to_string().replace("\n", " ")),
+        continental_us: query.continental_us,
     })
-    // Redirect::to(uri!("/search/notes"))
 }
 
 #[get("/hello/<name>")]

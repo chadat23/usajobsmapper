@@ -1,5 +1,7 @@
 {{#*inline "head"}}
-  <title>USAJOBSmapper</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <title>USAJOBSmapper</title>
 {{/inline}}
 
 {{#*inline "body"}}
@@ -21,7 +23,24 @@
         </span>
     </div>
 
-    <script src="/static/js/main.js"></script>
+    <script type="text/javascript">
+        function positions() {
+            var a = "{{ positions }}";
+            var b = a.substring(6, a.length - 6);
+            while (b.includes("&quot;")) {
+                b = b.replace("&quot;", '"');
+            }
+            var d = JSON.parse(b);
+            console.log("positions and stuff", d);
+            return d;
+        }
+        function continental_us() {
+            return {{ continental_us }};
+        }
+        {{!-- positions(); --}}
+    </script>
+    <script src="/static/js/mapper.js"></script>
+    <script src="/static/js/locations.js"></script>
 
     {{!-- {% if content.scrol_to_anchor %}
     <script>

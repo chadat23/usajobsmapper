@@ -230,7 +230,7 @@ fn make_url(query: &Query) -> String {
         payload = format!("{}SortField={}&", payload, query.sort_field)
     }
     payload = format!("{}SortDirection={}&", payload, query.sort_direction);
-    payload = format!("{}ResultsPerPage=2&", payload);
+    payload = format!("{}ResultsPerPage=10&", payload);
     payload = format!("{}Fields=Min&", payload);
     payload = format!("{}Page={}", payload, query.page);
 

@@ -1,32 +1,7 @@
-#![feature(string_remove_matches)]
-
-const leaflet = window.leaflet;
-
-const url = "/search/query";
-const myForm = document.getElementById("search_form");
-
-const max_lat = 49.371643;
-const min_lat = 25.827089;
-const max_long = -66.927119;
-const min_long = -124.639440;
-
-
-myForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    fetch(url, {
-        method: 'post',
-        body: formData,
-    }).then(function (response) {
-        return response.json();
-    }).then(function (results) {
-        updatePageInfo(results);
-    }).catch(function (error) {
-        console.log(error);
-    })
-})
+var max_lat = 49.371643;
+var min_lat = 25.827089;
+var max_long = -66.927119;
+var min_long = -124.639440;
 
 function makeMap(positions, continental_us) {
 
@@ -38,6 +13,7 @@ function makeMap(positions, continental_us) {
     var long = [];
     if (positions.length > 0) {
         for (const position of positions) {
+            console.log(typeof positions);
             for (const location of position.locations) {
                 if (continental_us) {
                     if (min_lat < location.latitude && location.latitude < max_lat && min_long < location.longitude && location.longitude< max_long) {
@@ -65,20 +41,12 @@ function makeMap(positions, continental_us) {
         ne = [Math.max(...lat), Math.max(...long)];
     }
 
-    // console.log(sw, ne);
-
     var container = L.DomUtil.get('map'); 
     if(container != null){ 
         container._leaflet_id = null; 
     }
 
     var map = L.map('map').fitBounds([sw, ne]);
-    // var map = L.map('map', {maxBounds: [sw, ne]}).fitBounds([sw, ne]);
-    // var map = L.map('map', {
-    //     center: [51.505, -0.09],
-    //     zoom: 10
-    // });
-    // map.fitBounds([sw, ne]);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', 
         {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
@@ -90,18 +58,6 @@ function makeMap(positions, continental_us) {
         marker.bindTooltip(location["tooltip"]);
         marker.bindPopup(location["popup"]);
     }
-}
-
-function updatePageInfo(pageInfo) {
-    document.getElementById("page").textContent = pageInfo.current_page;
-    document.getElementById("number-of-pages").textContent = pageInfo.number_of_pages;
-
-    document.getElementById("total_search_results").textContent = pageInfo.total_search_results;
-    document.getElementById("total_returned_jobs").textContent = pageInfo.positions.length;
-    document.getElementById("total_returned_locations").textContent = pageInfo.total_returned_locations;
-
-    // console.log(pageInfo);
-    makeMap(pageInfo.positions, pageInfo.continental_us);
 }
 
 function makeLabels(locations) {
@@ -123,38 +79,3 @@ function makeLabels(locations) {
 
     return location_labels
 }
-
-function toolTip(job, location) {
-
-    if (job.low_grade == job.high_grade) {
-        high_grade = "";
-    } else {
-        high_grade = " - " + job.high_grade;
-    }
-
-    return job.title + 
-        "<br>" + 
-        location + 
-        "<br>" + 
-        "Grade: " + job.low_grade + high_grade + 
-        "<br>"
-}
-
-function popup(job) {
-    return job.title + 
-        '<br>' + 
-        '<a href="' + job.url + '" target="_blank">' + job.url + '</a>' + 
-        '<br>' + 
-        '<button type="button" class="btn btn-link" name="location" value="'  + 
-        job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
-        '<br>'
-}
-
-function get_locations(id) {
-    document.getElementById("search_form").method = "post";
-    document.getElementById("search_form").action = "/search/locations/" + id;
-    
-    document.search_form.submit();
-}
-
-makeMap([], false);
