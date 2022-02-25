@@ -82,6 +82,7 @@ function toolTip(job, location) {
         "Grade: " + job.low_grade + high_grade + 
         "<br>" + 
         "Number of locations: " + job.locations.length + 
+        "<br>" + 
         "<br>"
 }
 
@@ -92,7 +93,8 @@ function popup(job) {
         '<br>' + 
         '<button type="button" class="btn btn-link" name="location" value="'  + 
         job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
-        '<br>'
+        '<br>' + 
+        "<br>"
 }
 
 function get_locations(id) {

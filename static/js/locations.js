@@ -30,6 +30,7 @@ function toolTip(job, location) {
     return job.title + 
         "<br>" + 
         location + 
+        "<br>" +
         "<br>"
 }
 
@@ -37,6 +38,7 @@ function popup(job) {
     return job.title + 
         '<br>' + 
         '<a href="' + job.url + '" target="_blank">' + job.url + '</a>' + 
+        '<br>' + 
         '<br>'
 }
 

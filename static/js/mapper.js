@@ -53,12 +53,32 @@ function makeMap(positions, continental_us) {
     var location_labels = makeLabels(locations);
 
     for (const location of location_labels) {
-        let marker = L.marker(location["lat_long"]).addTo(map);
-        marker.bindTooltip(location["tooltip"]);
-        marker.bindPopup(location["popup"]);
-        if (!location["found"]) {
+        if (location["found"]) {
+            let marker = L.marker(location["lat_long"]).addTo(map);
+            marker.bindTooltip(location["tooltip"]);
+            marker.bindPopup(location["popup"]);
+        } else {
+            let leafletIcon = L.icon({
+                iconUrl: "/static/images/missing_locations.ico",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+            })
+            let marker = L.marker(location["lat_long"], {icon: leafletIcon}).addTo(map);
+            marker.bindTooltip("THESE JOBS ARE NOT CORRECTLY LOCATED" + 
+                               "<br>" + 
+                               "FOR WHATEVER REASON, THEY COULDN'T BE FOUND IN THE LIST OF LOCAITONS" +
+                               "<br>" +
+                               "<br>" +
+                               location["tooltip"]);
+            marker.bindPopup(location["popup"]);
             marker._icon.classList.add("huechange");
         }
+        // var circle = L.circle([lat, long], {
+        //     color: "red",
+        //     fillColor: "#f03",
+        //     fillOpacity: 0.5,
+        //     radius: <radius in meters></>
+        // }).addTo(map);
     }
 }
 
