@@ -7,7 +7,7 @@ use rocket_dyn_templates::Template;
 
 mod search;
 mod setup;
-use setup::{ make_locations, make_usajobs_credentials };
+use setup::{ abrev_to_full, make_locations, make_usajobs_credentials };
 
 // #[get("/")]
 // fn index() -> RawHtml<&'static str> {
@@ -26,6 +26,7 @@ fn rocket() -> _ {
         .manage(make_usajobs_credentials("config.toml"))
         // .manage(make_locations("US copy.txt"))
         .manage(make_locations(["locations.txt", "added_locations.txt"]))
+        .manage(abrev_to_full())
         .mount("/", routes![index])
         .mount("/search", routes![search::index, search::notes, search::about, search::search, search::locations])
         .mount("/static", FileServer::from("static/"))

@@ -33,7 +33,8 @@ pub fn index() -> Template {
 #[post("/query", data = "<form>")]
 pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>, 
     usajobs_credentials: &State<UsaJobsCredentials>,
-    places: &State<HashMap<String, (String, String)>>) -> Value {
+    places: &State<HashMap<String, (String, String)>>,
+    states: &State<HashMap<String, String>>) -> Value {
     // let query: Query = parse_form(form);
     let query = match form.value {
         Some(ref submission) => {
@@ -49,7 +50,7 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>,
 
     let positions = parse_request_into_jobs(jobs_request, &query);
 
-    let positions = update_lat_long(positions, places);
+    let positions = update_lat_long(positions, query.location_name, places, states);
 
     // let positions = SearchResult {
     //     total_search_results: 1,
@@ -85,7 +86,8 @@ pub async fn search<'r>(form: Form<Contextual<'r, Query<'r>>>,
 pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>, 
     job_id: String, 
     usajobs_credentials: &State<UsaJobsCredentials>,
-    places: &State<HashMap<String, (String, String)>>) -> Template {
+    places: &State<HashMap<String, (String, String)>>,
+    states: &State<HashMap<String, String>>) -> Template {
 
     // // let query: Query = parse_form(form);
     let query = match form.value {
@@ -141,9 +143,11 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
         positions: Vec::from([position]),
         total_returned_locations: 0,
         continental_us: positions.continental_us,
+        radius: query.radius.parse::<u32>().unwrap_or(0),
+        radius_center: [0.0, 0.0]
     };
 
-    let positions = update_lat_long(result, places);
+    let positions = update_lat_long(result, query.location_name, places, states);
 
     // let positions = SearchResult {
     //     total_search_results: 1,
@@ -176,6 +180,8 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
         parent: "search/base",
         positions: format!("{:?}", json!(positions.positions).to_string().replace("\n", " ")),
         continental_us: query.continental_us,
+        radius: positions.radius,
+        radius_center: positions.radius_center,
     })
 }
 

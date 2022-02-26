@@ -3,7 +3,7 @@ var min_lat = 25.827089;
 var max_long = -66.927119;
 var min_long = -124.639440;
 
-function makeMap(positions, continental_us) {
+function makeMap(positions, continental_us, radius, radius_center) {
 
     var sw = [min_lat, min_long];
     var ne = [max_lat, max_long];
@@ -88,11 +88,22 @@ function makeMap(positions, continental_us) {
         marker.bindPopup(lost_locations_popup);
     }
 
-        // var circle = L.circle([lat, long], {
-        //     color: "red",
-        //     fillColor: "#f03",
-        //     fillOpacity: 0.5,
-        //     radius: <radius in meters></>
-        // }).addTo(map);
+    if (radius > 0.001 && radius_center[0] > 0.001) {
+        var circle = L.circle(radius_center, {
+            color: "red",
+            fillColor: "#f03",
+            fillOpacity: 0.0,
+            radius: radius * 1609,
+        }).addTo(map);
+    }
+    
+    if (radius_center[0] > 0.001) {
+        let leafletIcon = L.icon({
+            iconUrl: "/static/images/star_icon.png",
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+        })
+        let marker = L.marker(radius_center, {icon: leafletIcon}).addTo(map);
+    }      
 }
 

@@ -42,4 +42,4 @@ function popup(job) {
         '<br>'
 }
 
-makeMap(positions(), continental_us());
+makeMap(positions(), continental_us(), radius(), radius_center());

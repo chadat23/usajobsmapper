@@ -43,7 +43,7 @@ function updatePageInfo(pageInfo) {
     document.getElementById("page_number").textContent = pageInfo.current_page;
     document.getElementById("total_pages").textContent = pageInfo.number_of_pages;
 
-    makeMap(pageInfo.positions, pageInfo.continental_us);
+    makeMap(pageInfo.positions, pageInfo.continental_us, pageInfo.radius, pageInfo.radius_center);
 }
 
 function makeLabels(locations) {

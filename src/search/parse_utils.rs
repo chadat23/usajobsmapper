@@ -1,5 +1,6 @@
 use std::collections::{ HashMap, HashSet };
 
+use rocket::futures::TryFutureExt;
 use rocket::serde::{Serialize, Deserialize};
 use rocket::State;
 
@@ -33,6 +34,8 @@ pub struct SearchResult {
     pub positions: Vec<Position>,
     pub total_returned_locations: usize,
     pub continental_us: bool,
+    pub radius: u32,
+    pub radius_center:[f32; 2],
 }
 
 pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult {
@@ -84,10 +87,14 @@ pub fn parse_request_into_jobs(response: String, query: &Query) -> SearchResult 
         current_page: query.page.parse::<u32>().unwrap(),
         continental_us: query.continental_us,
         positions,
+        radius: query.radius.parse::<u32>().unwrap_or(0),
+        radius_center: [0.0, 0.0],
     }
 }
 
-pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String, (String, String)>>) -> SearchResult {
+pub fn update_lat_long(mut results: SearchResult, mut radius_center: &str, 
+    places: &State<HashMap<String, (String, String)>>, 
+    states: &State<HashMap<String, String>>) -> SearchResult {
     for position in &mut results.positions {
         for location in &mut position.locations {
             let name = location.name.to_lowercase();
@@ -106,6 +113,24 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
             }
         }
     }
+
+    let radius_center = match states.get(radius_center.split(", ").last().unwrap()) {
+        Some(full_state) => {
+            let chunk = radius_center.split(", ").last().unwrap();
+            let radius_center = radius_center.replace(chunk, full_state);
+            radius_center
+        },
+        None => radius_center.to_string(),
+    };
+
+    results.radius_center = match places.get(radius_center.as_str()) {
+        Some(center) => {
+            [center.0.parse::<f32>().unwrap(), center.1.parse::<f32>().unwrap()]
+        },
+        None => {
+            [0.0, 0.0]
+        }
+    };
 
     results
 }
