@@ -25,7 +25,7 @@ fn rocket() -> _ {
     rocket::build()
         .manage(make_usajobs_credentials("config.toml"))
         // .manage(make_locations("US copy.txt"))
-        .manage(make_locations("US.txt"))
+        .manage(make_locations(["locations.txt", "added_locations.txt"]))
         .mount("/", routes![index])
         .mount("/search", routes![search::index, search::notes, search::about, search::search, search::locations])
         .mount("/static", FileServer::from("static/"))

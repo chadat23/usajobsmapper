@@ -16,8 +16,6 @@ pub async fn make_query<'r>(query: &Query<'_>, usajobs_credentials: &State<UsaJo
     jobs_request.await.text().await.unwrap()
 }
 
-
-
 #[derive(Debug, FromFormField, Serialize, PartialEq)]
 pub enum SortField {
     DEFAULT,

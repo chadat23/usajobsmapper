@@ -21,7 +21,7 @@ use query::{ Query };
 mod parse_utils;
 
 use crate::search::parse_utils::{ parse_request_into_jobs, update_lat_long, Position, Location };
-use crate::setup::{ Places, UsaJobsCredentials };
+use crate::setup::{ Place, UsaJobsCredentials };
 
 #[get("/")]
 pub fn index() -> Template {

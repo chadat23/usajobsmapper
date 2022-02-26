@@ -98,6 +98,7 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
                     location.longitude = long;
                 },
                 None => {
+                    println!("Missing location: {}", name);
                     location.latitude = (44.9672433944).to_string();
                     location.longitude = (-103.7715563417).to_string();
                     location.found = false;
@@ -105,8 +106,6 @@ pub fn update_lat_long(mut results: SearchResult, places: &State<HashMap<String,
             }
         }
     }
-
-    // println!("{:?}", results);
 
     results
 }

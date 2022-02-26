@@ -57,28 +57,42 @@ function makeMap(positions, continental_us) {
             let marker = L.marker(location["lat_long"]).addTo(map);
             marker.bindTooltip(location["tooltip"]);
             marker.bindPopup(location["popup"]);
-        } else {
-            let leafletIcon = L.icon({
-                iconUrl: "/static/images/missing_locations.ico",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-            })
-            let marker = L.marker(location["lat_long"], {icon: leafletIcon}).addTo(map);
-            marker.bindTooltip("THESE JOBS ARE NOT CORRECTLY LOCATED" + 
-                               "<br>" + 
-                               "FOR WHATEVER REASON, THEY COULDN'T BE FOUND IN THE LIST OF LOCAITONS" +
-                               "<br>" +
-                               "<br>" +
-                               location["tooltip"]);
-            marker.bindPopup(location["popup"]);
-            marker._icon.classList.add("huechange");
         }
+    }
+
+    var lost_locations_tooltip = "";
+    var lost_locations_popup = "";
+    var lost_location;
+    for (const location of location_labels) {
+        if (!location["found"]) {
+            lost_locations_tooltip += location["tooltip"];
+            lost_locations_popup += location["popup"];
+            lost_location = location["lat_long"];
+        }
+    }
+    if (lost_locations_tooltip != "") {
+        lost_locations_tooltip = "THESE JOBS ARE NOT CORRECTLY LOCATED" + 
+            "<br>" + 
+            "FOR WHATEVER REASON, THEY COULDN'T BE FOUND IN THE LIST OF LOCAITONS" +
+            "<br>" +
+            "<br>" +
+            lost_locations_tooltip;
+
+        let leafletIcon = L.icon({
+            iconUrl: "/static/images/missing_locations.ico",
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+        })
+        let marker = L.marker(lost_location, {icon: leafletIcon}).addTo(map);
+        marker.bindTooltip(lost_locations_tooltip);
+        marker.bindPopup(lost_locations_popup);
+    }
+
         // var circle = L.circle([lat, long], {
         //     color: "red",
         //     fillColor: "#f03",
         //     fillOpacity: 0.5,
         //     radius: <radius in meters></>
         // }).addTo(map);
-    }
 }
 
