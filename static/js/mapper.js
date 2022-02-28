@@ -11,33 +11,46 @@ function makeMap(positions, continental_us, radius, radius_center) {
     var locations = {};
     var lat = [];
     var long = [];
+    console.log(document.getElementById("zoom_on_circle").checked);
     if (positions.length > 0) {
         for (const position of positions) {
             for (const location of position.locations) {
-                if (continental_us) {
-                    if (min_lat < location.latitude && location.latitude < max_lat && min_long < location.longitude && location.longitude< max_long) {
-                        lat.push(parseFloat(location.latitude));
-                        long.push(parseFloat(location.longitude));
-                        if (location in locations) {
-                            locations[location.name][0].push(position);
-                        } else {
-                            locations[location.name] = [[position, ], [[lat[lat.length - 1], long[long.length - 1]], location.found]];
-                        }
-                    }
+                lat.push(parseFloat(location.latitude));
+                long.push(parseFloat(location.longitude));
+                if (location.name in locations) {
+                    locations[location.name][0].push(position);
                 } else {
-                        lat.push(parseFloat(location.latitude));
-                        long.push(parseFloat(location.longitude));
-                    if (location in locations) {
-                        locations[location.name][0].push(position);
-                    } else {
-                        locations[location.name] = [[position, ], [[lat[lat.length - 1], long[long.length - 1]], location.found]];
-                    }
+                    locations[location.name] = [[position, ], [[lat[lat.length - 1], long[long.length - 1]], location.found]];
                 }
             }
         }
 
-        sw = [Math.min(...lat), Math.min(...long)];
-        ne = [Math.max(...lat), Math.max(...long)];
+        if (document.getElementById("zoom_on_circle").checked && radius_center[0] > 0.001 && radius > 0.001) {
+            var radius_at_lat = Math.sin(radius_center[0]) * 24901.461 / (2 * Math.PI);
+            var circumference_at_lat = Math.PI * radius_at_lat**2;
+            var degrees_per_mile_at_lat = 360 / circumference_at_lat;
+            var degrees = radius * degrees_per_mile_at_lat
+            max_lat = radius_center[0] + 360 / 24859.734 * radius;
+            min_lat = radius_center[0] - 360 / 24859.734 * radius;
+            max_long = radius_center[1] + degrees;
+            min_long = radius_center[1] - degrees;
+            n = Math.min(max_lat, Math.max(...lat));
+            e = Math.min(max_long, Math.max(...long));
+            s = Math.max(min_lat, Math.min(...lat));
+            w = Math.max(min_long, Math.min(...long));
+        } else if (continental_us) {
+            n = Math.min(max_lat, Math.max(...lat));
+            e = Math.min(max_long, Math.max(...long));
+            s = Math.max(min_lat, Math.min(...lat));
+            w = Math.max(min_long, Math.min(...long));
+        } else {
+            n = Math.max(...lat);
+            e = Math.max(...long);
+            s = Math.min(...lat);
+            w = Math.min(...long);
+        }
+        ne = [n, e];
+        sw = [s, w];
     }
 
     var container = L.DomUtil.get('map'); 

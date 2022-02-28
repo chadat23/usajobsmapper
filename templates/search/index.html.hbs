@@ -12,7 +12,7 @@
                 <a href="/search" class="h1 mapper">USAJOBSmapper</a> 
             </div>
             <div>
-                <a href="/search/notes">Notes</a>
+                <a href="/search/notes" class="notes">Notes</a>
             </div>
         </div>
     </nav>
@@ -97,6 +97,7 @@
                         </button>
                     </h2>
                     <select class="form-select" multiple name="organization">
+                        <option value="IN"> Department of the Interior </option>
                         <option value="AG"> Department of Agriculture </option>
                         <option value="AF"> Department of the Air Force </option>
                         <option value="AR"> Department of the Army </option>
@@ -110,7 +111,6 @@
                         <option value="HE"> Department of Health and Human Services </option>
                         <option value="HS"> Department of Homeland Security </option>
                         <option value="HU"> Department of Housing and Urban Development </option>
-                        <option value="IN"> Department of the Interior </option>
                         <option value="JL"> Judicial Branch </option>
                         <option value="DJ"> Department of Justice </option>
                         <option value="DL"> Department of Labor </option>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="col-lg-3 dropdown">
                     <h2 class="h3">Radius:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The radius of the search around the listed Location in miles.">
+                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The radius of the search around the listed Location in miles. &#013If a Location is entered, the default is 25.">
                             ?
                         </button>
                     </h2>
@@ -182,10 +182,14 @@
                 </div>
                 <div class="col-lg-3">
                     <input class="form-check-input" type="checkbox" value="True" name="continental_us"
-                           {% if content.continental_us %}checked{% endif %}>
-                    <label class="form-check-label" for="RelocationIndicator">
+                    <label class="form-check-label" for="continental_us">
                         Only Show Continental US
-                    </label>                    
+                    </label>
+                    <br>
+                    <input class="form-check-input" type="checkbox" value="" name="zoom_on_circle" id="zoom_on_circle"
+                    <label class="form-check-label" for="zoom_on_circle">
+                        Zoom to fit location and radius
+                    </label>  
                 </div>
                 <div class="col-lg-3">
                     <select class="form-select" name="sort_field">

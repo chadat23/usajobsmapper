@@ -201,7 +201,7 @@ fn make_url(query: &Query) -> String {
         payload = format!("{}&", payload);
     }
     if query.job_category_code != "" {
-        payload = format!("{}JobCategoryCode={}&", payload, query.job_category_code.replace("\"", "").replace(" ", ";"))
+        payload = format!("{}JobCategoryCode={}&", payload, query.job_category_code.replace("\"", "").replace(";", "").replace(",", "").replace(" ", ";"))
     }
     if query.relocation_indicator {
         payload = format!("{}RelocationIndicator=True&", payload);

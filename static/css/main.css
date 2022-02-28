@@ -1,5 +1,5 @@
-a.btn {
-    color: #000095;
+a.btn.btn-nav.btn-primary {
+    color: #FFFFFF;
 }
 
 .btn-primary {
@@ -49,10 +49,12 @@ header {
     height: 20px;
 }
 
-#notes {
+.notes {
+    text-decoration: none;
+}
+a.notes:visited {
     color: #000095;
 }
-
-.huechange {
-    color: #902525;
+a.notes:hover {
+    color: #0088FF;
 }

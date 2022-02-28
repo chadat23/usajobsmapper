@@ -133,4 +133,4 @@ function last_page() {
     }
 }
 
-makeMap([], false);
+makeMap([], false, 0, [0, 0]);

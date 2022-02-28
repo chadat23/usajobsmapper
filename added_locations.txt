@@ -1,1 +1,51 @@
-yosemite national park, ca	37.739644	-119.587704
+ashe county, north carolina	36.4393554	-81.5076569
+big bend national park, texas	29.2502011	-103.250452
+colter bay, wyoming	43.896605	-110.649099
+columbus afb, mississippi	33.6406328	-88.4536876
+crater lake, oregon	42.9415262	-122.0988203
+cumberland county, tennessee	35.953805	-84.9748195
+death valley, california	36.4240473	-116.9140437
+fort harrison, montana	46.6159044	-112.1129883
+goodfellow afb, texas	31.4320699	-100.4062284
+holloman afb, new mexico	33.076831	-106.2190016
+homestead afb, florida	27.8436408	-82.5028722
+honaunau, hawaii	19.425801	-155.908356
+kailua kona, hawaii	19.641941	-155.996933
+lake and peninsula county, alaska	60.567200	-154.614319
+lees ferry, arizona	36.8661151	-111.5872123
+lowndes county, alabama	31.985701	-86.589996
+manatee county, florida	27.5213933	-82.3801566
+mesa verde national park, colorado	37.23333	-108.47981
+new york, new york	40.69766	-74.11976
+petrified forest national park, arizona	35.0880783	-109.8065057
+piti, guam	13.4501257	144.757551
+saint john island, virgin islands	18.5	-64.5
+saint louis, missouri	38.6312667	-90.2353056
+saint marys, georgia	30.7305142	-81.5464928
+san juan, puerto rico	18.465299	-66.116666
+sedro woolley, washington	48.5049158	-122.23494
+swain county, north carolina	35.45819	-83.466275
+tuskegee institute, alabama	32.4301095	-85.7067335
+yellowstone national park, montana	44.6200885	-110.5606893
+yellowstone national park, wyoming	44.58540	-111.07446
+yosemite national park, california	37.73917	-119.57316
+washington, district of columbia	38.89386	-77.08461
+washington dc, district of columbia	38.89386	-77.08461
+glen canyon, utah	40.3302326	-111.6188087
+kane county, utah	37.2439691	-112.0048393
+san juan county, utah	37.5859438	-109.7852018
+albemarle county, virginia	38.0085107	-78.6086754
+amherst county, virginia	37.5997548	-79.1483701
+augusta county, virginia	38.1793809	-79.1525761
+bedford county, virginia	37.3123905	-79.5399003
+fort monroe, virginia	37.0042943	-76.3069024
+franklin county, virginia	37.0527719	-79.8813093
+greene county, virginia	38.2954503	-78.4704823
+madison county, virginia	38.4114615	-78.2846634
+page county, virginia	38.6002354	-78.5016516
+rappahannock county, virginia	38.6926326	-78.1495818
+rockbridge county, virginia	37.8331804	-79.4622597
+rockingham county, virginia	38.5080288	-78.8949442
+stafford county, virginia	38.4167265	-77.4579783
+warren county, virginia	38.9131907	-78.2096656
+christiansted, virgin islands	17.7439481	-64.7079823

@@ -4,6 +4,7 @@ use std::io::{prelude::*, BufReader};
 
 use figment::{Figment, providers::{Format, Toml, }};
 
+// https://www.gps-coordinates.net/
 pub fn abrev_to_full() -> HashMap<String, String> {
     HashMap::from([
         (String::from("al"), String::from("alabama")),
@@ -56,7 +57,7 @@ pub fn abrev_to_full() -> HashMap<String, String> {
         (String::from("wv"), String::from("west virginia")),
         (String::from("wi"), String::from("wisconsin")),
         (String::from("wy"), String::from("wyoming")),
-        //////////////////////////////////////////////////
+        //  ------------
         (String::from("dc"), String::from("washington district of columbia")),
         (String::from("vg"), String::from("british virgin islands")),
     ])
@@ -117,3 +118,21 @@ pub fn make_usajobs_credentials(file: &str) -> UsaJobsCredentials{
 
     UsaJobsCredentials { apikey, useragent}
 }
+
+// kings canyon national park, california
+// marin county, california
+// sequoia national park, california
+// hawaii national park, hawaii
+// whatcom county, washington
+// tallapoosa county, alabama
+// big cypress, florida
+// miami-dade county, florida
+// bell county, kentucky
+// franklin county, mississippi
+// alleghany county, north carolina
+// burke county, north carolina
+// mitchell county, north carolina
+// watauga county, north carolina
+// yancey county, north carolina
+// carroll county, virginia
+// washington navy yard, district of columbia
