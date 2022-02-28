@@ -27,6 +27,7 @@ function run_query() {
         return response.json();
     }).then(function (results) {
         updatePageInfo(results);
+        document.getElementById("map_holder").scrollIntoView();
     }).catch(function (error) {
         console.log(error);
     })

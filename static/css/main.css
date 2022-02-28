@@ -4,7 +4,6 @@ a.btn.btn-nav.btn-primary {
 
 .btn-primary {
     background: #000095;
-    /*outline-color: #000095;*/
     border-color: #000095;
 }
 
@@ -14,7 +13,6 @@ body {
 
 .btn-nav {
     color: #000095;
-    /* color: #902525; */
     padding-left: 0;
     padding-right: 0;
 }
@@ -34,14 +32,12 @@ div.map {
 }
 
 header {
-    /*align-items: baseline;*/
     justify-content: space-between;
 }
 
 .mapper {
     font-style: oblique;
     color: #000095;
-    /* color: #902525; */
     text-decoration: none;
 }
 
@@ -49,12 +45,13 @@ header {
     height: 20px;
 }
 
-.notes {
-    text-decoration: none;
-}
-a.notes:visited {
+a.link_style:visited {
     color: #000095;
 }
-a.notes:hover {
+a.link_style:hover {
     color: #0088FF;
+}
+
+a.link_style.note {
+    text-decoration: none;
 }

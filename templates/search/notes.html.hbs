@@ -8,65 +8,40 @@
         <div class="container-xl">
             <div>
                 <a href="/search" class="h1 mapper">USAJOBSmapper</a>
-                <!-- <h1 class="mapper">USAJOBSmapper</h1> -->
             </div>
-            {{!-- <div class="dropdown mt-3">
-                <button class="btn dropdown-toggle" type="button" id="notes" data-bs-toggle="dropdown">
-                    Notes
-                </button> --}}
-                <ul class="" aria-labelledby="notes">
-                    <li class="">Blue map markers denote jobs that are believed to be correctly located, red markers are shown in the 
-                        correct state but the locations within the states are wrong.
-                    </li>
-                    <li class="">Hovering over the ? will show some additional information for each 
-                        respective field.
-                    </li>
-                    <li class="">Adding more search criteria (as apposed to adding more responses to a
-                        specific criteria) will generally reduce the number of returned
-                        jobs.
-                    </li>
-                    <li class="">Hovering over and/or clicking on map markers will show additional
-                        information.
-                    </li>
-                    <li class="">
-                        Positions shown outside of the Radius circle are typically additional locations for jobs
-                        that have multiple locations, some being within the circle.
-                    </li>
-                    <li class="">This site is not affiliated with
-                        <a href="https://www.usajobs.gov/">USAJOBS</a>,
-                        this site maps and presents results retrieved from USAJOBS searches.
-                    </li>
-                    <li class="">Do not assume that this site is returning all results or that it's
-                        returning the same results that would be gotten from the same search on USAJOBS.gov.
-                    </li>
-                    <li class=""><a href="#map">stuff</a></li>
-                </ul>
-            {{!-- </div> --}}
+            <ul class="" aria-labelledby="notes" style="font-size: x-large;">
+                <li>Blue map markers denote jobs that are believed to be correctly located (but no guarantees are made), 
+                    red markers have jobs where, for whatever reason, latitude and longitude couldn't be looked up.
+                </li>
+                <li>When a red marker is displayed, so that jobs that couldn't be located on the map can still be reported,
+                    it's always in a standardized location, so if the map's focused on a Locatoin and Radius, you may not see it/them
+                    if you don't scroll or zoom the map (why knows, maybe this will change someday).
+                </li>
+                <li>Hovering over the "?" that appear adjascent to the field labels will show some additional information for each 
+                    respective field.
+                </li>
+                <li>Adding more search criteria (as opposed to adding more responses to a
+                    specific criteria) will generally reduce the number of returned
+                    jobs.
+                </li>
+                <li>Hovering over and/or clicking on map markers will show additional
+                    information.
+                </li>
+                <li>
+                    Positions shown outside of the Radius circle are additional locations for jobs
+                    that have multiple locations where at least one location for each job is within the circle.
+                </li>
+                <li>This site is not affiliated with
+                    <a href="https://www.usajobs.gov/">USAJOBS</a>,
+                    this site maps and presents results retrieved from USAJOBS searches.
+                </li>
+                <li>Do not assume that this site is returning all results or that it's
+                    returning the same results that would be gotten from the same search on USAJOBS.gov.
+                    An honest effort has been made to make that happen, but things happen.
+                </li>
+            </ul>
         </div>
     </nav>
-
-    {{!-- {% if content.scrol_to_anchor %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.location.hash = '#{{ content.scrol_to_anchor }}';
-        });
-    </script>
-    {% endif %} --}}
-
-{{!-- <section id="hello">
-  <h1>Hi {{ name }}!</h1>
-  <h3>Here are your items:</h3>
-  <ul>
-    {{#each items}}
-      <li>{{ this }}</li>
-    {{/each}}
-  </ul>
-</section>
-
-<section id="custom-helper">
-  <p>Try going to <a href="/search/hello/Your%20Name">/search/hello/Your Name</a>.</p>
-  <p>Also, check {{ wow "this" }} (custom helper) out!</p>
-</section> --}}
-
+    
 {{/inline}}
 {{~> (parent)~}}
