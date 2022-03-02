@@ -55,3 +55,7 @@ a.link_style:hover {
 a.link_style.note {
     text-decoration: none;
 }
+
+.field-label:hover {
+    cursor: help;
+}

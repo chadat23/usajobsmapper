@@ -21,31 +21,19 @@
         <form action="" id="search_form" name="search_form">
             <div class="row">
                 <div class="col-lg-8 dropdown">
-                    <h2 class="h3">Keywords: 
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="More words yields fewer results.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="More words yields fewer results.">Keywords:</h2>
                     <input type="text" class="form-control" name="keyword"
                       value="">
                 </div>
                 <div class="col-lg-4 dropdown">
-                    <h2 class="h3">Position Title:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="More words yields more results.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="More words yields more results.">Position Title:</h2>
                     <input type="text" class="form-control" name="position_title"
                            value="">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Hiring Path:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="More selections yields more results. &#013; Select as few or as many as you want.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="More selections yields more results. &#013; Select as few or as many as you want.">Hiring Path:</h2>
                     <select class="form-select" multiple name="hiring_path">
                         <option value="public">Open to the public</option>
                         <option value="vet">Veterans</option>
@@ -67,11 +55,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Grade:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="Enter the lowest and/or highest acceptable grade. &#013; More entries yields fewer results.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="Enter the lowest and/or highest acceptable grade. &#013; More entries yields fewer results.">Grade:</h2>
                     <def class="row">
                         <def class="col-lg-6">
                             <h3 class="h5">Lowest Grade:</h3>
@@ -92,11 +76,7 @@
                     </def>
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Department & Agency:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="More selections yields more results. &#013; Select as few or as many as you want.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="More selections yields more results. &#013; Select as few or as many as you want.">Department & Agency:</h2>
                     <select class="form-select" multiple name="organization">
                         <option value="IN"> Department of the Interior </option>
                         <option value="AG"> Department of Agriculture </option>
@@ -127,11 +107,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Series
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title='Enter as many 4 digit codes as desired. &#013; More codes yields more results. &#013; Ex. "0025 8602" for Park Ranger and/or Aircraft Engine Mechanic jobs.'>
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title='Enter as many 4 digit codes as desired. &#013; More codes yields more results. &#013; Ex. "0025 8602" for Park Ranger and/or Aircraft Engine Mechanic jobs.'>Series</h2>
                     <input type="text" class="form-control" name="job_category_code" value="">
                 </div>
             </div>
@@ -144,11 +120,7 @@
                     </label>
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Work Schedule:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="More selections yields more results. &#013; Select as few or as many as you want.">
-                            ?
-                        </button>
-                    </h2>
+                    <h2 class="h3 field-label" title="More selections yields more results. &#013; Select as few or as many as you want.">Work Schedule:</h2>
                     <select class="form-select" multiple name="position_schedule_type_code">
                         <option value="ONE">Full-time</option>
                         <option value="TWO">Part-time</option>
@@ -158,20 +130,12 @@
                     </select>
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Location:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The name of where you want to search, &#013; should be in the format: Seattle, WA. &#013; If multiple locatoins are entered, &#013; they should be semi-colun delineated, &#013; for example: Seattle, WA; Portland, OR">
-                            ?
-                        </button>
-                    </h2>
-                    <input type="text" class="form-control" name="location_name" value="">
+                    <h2 class="h3 field-label" title="A name of where you'd like to search, &#013; should be in the format: Seattle, WA. &#013; If multiple locatoins are entered, &#013; they should be semi-colun delineated, &#013; for example: Seattle, WA; Portland, OR">Location:</h2>
+                    <input type="text" class="form-control" onfocusout="setRadius();" name="location_name" id="location_name" value="">
                 </div>
                 <div class="col-lg-3 dropdown">
-                    <h2 class="h3">Radius:
-                        <button class="btn btn-sm h4" type="button" data-bs-placement="bottom" title="The radius of the search around the listed Location in miles. &#013If a Location is entered, the default is 25.">
-                            ?
-                        </button>
-                    </h2>
-                    <input type="Number" class="form-control" name="radius" value="">
+                    <h2 class="h3 field-label" title="The radius of the search around the listed Location in miles. &#013If a Location is entered, the default is 25.">Radius:</h2>
+                    <input type="Number" class="form-control" name="radius" id="radius" value="">
                 </div>
             </div>
             <div class="row">
@@ -219,12 +183,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
+                    Number of returned & mapped jobs: <span id="total_returned_jobs"></span>
+                    <br>
+                    Number of returned & mapped locations: <span id="total_returned_locations"></span>
+                    <br>
                     Total search results: <span id="total_search_results"></span>
-                    <br>
-                    Total returned jobs: <span id="total_returned_jobs"></span>
-                    <br>
-                    Total job locations: <span id="total_returned_locations"></span>
                     <br>
                     <small>Some jobs have multiple locations.</small>
                 </div>

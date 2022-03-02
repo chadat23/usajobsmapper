@@ -140,4 +140,15 @@ function last_page() {
     }
 }
 
+function setRadius() {
+    console.log("outer", document.getElementById("location_name").value, "lkj");
+    if (document.getElementById("location_name").value == "") {
+        console.log("first");
+        document.getElementById("radius").value = "";
+    } else if (document.getElementById("radius").value == "") {
+        console.log("second");
+        document.getElementById("radius").value = "25";
+    }
+}
+
 makeMap([], false, 0, [0, 0]);
