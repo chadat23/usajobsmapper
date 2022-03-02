@@ -1,6 +1,3 @@
 [usajobs]
 APIKEY = "<api key>"                        #  for usajobs
 USERAGENT = "<user agent email address>"    #  for usajobs
-
-[geonames]
-USERNAME = "<username>"                     #  for htStringtps://www.geonames.org/ / geopy

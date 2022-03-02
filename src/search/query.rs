@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fmt::format;
 use std::fmt;
 use std::str::FromStr;
@@ -233,4 +233,118 @@ fn make_url(query: &Query) -> String {
     payload = format!("{}Page={}", payload, query.page);
 
     payload.replace(" ", "%20")
+}
+
+#[derive(Debug, Serialize)]
+pub struct Location {
+    pub name: String,
+    pub latitude: String,
+    pub longitude: String,
+    pub found: bool,
+}
+
+#[derive(Debug, Serialize)]
+pub struct Position {
+    pub title: String,
+    pub url: String,
+    pub id: String,
+    pub locations: Vec<Location>,
+    pub orginization: String,
+    pub department: String,
+    pub low_grade: String,
+    pub high_grade: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct SearchResult {
+    pub total_search_results: u32,
+    pub current_page: u32,
+    pub number_of_pages: u32,
+    pub positions: Vec<Position>,
+    pub total_returned_locations: usize,
+    pub continental_us: bool,
+    pub radius: u32,
+    pub radius_center:[f32; 2],
+}
+
+impl SearchResult {
+    pub fn from_response_and_query(response: String, query: &Query,
+        places: &State<HashMap<String, (String, String)>>, 
+        states: &State<HashMap<String, String>>) -> Self {
+        // https://developer.usajobs.gov/API-Reference/GET-api-Search
+    
+        let response = json::parse(response.as_str()).unwrap();
+    
+        let search_result = &response["SearchResult"];
+    
+        let search_result_count = &search_result["SearchResultCount"];
+        let search_result_count_all = &search_result["SearchResultCountAll"];
+        let search_result_items = &search_result["SearchResultItems"];
+    
+        let mut positions: Vec<Position> = Vec::with_capacity(search_result_count.pretty(1).parse::<usize>().unwrap());
+        let mut position_set: HashSet<String> = HashSet::new();
+        for item in search_result_items.members() {
+            let matched_object_descriptor = &item["MatchedObjectDescriptor"];
+            let details = &matched_object_descriptor["UserArea"]["Details"];
+    
+            let position_locations = &matched_object_descriptor["PositionLocation"];        
+            let mut locations: Vec<Location> = Vec::with_capacity(position_locations.len());
+            for location in position_locations.members() {
+                let name = location["LocationName"].pretty(0).replace("\"", "");
+
+                position_set.insert(name.clone());
+
+                let location_info = match places.get(&name.to_lowercase()).cloned() {
+                    Some((lat, long)) => (lat, long, true),
+                    None => ((39.833333).to_string(), (-98.583333).to_string(), false),
+                };
+                locations.push(Location {
+                    name,
+                    latitude: location_info.0,
+                    longitude: location_info.1,
+                    found: location_info.2,
+                });
+            }
+    
+            positions.push(Position {
+                title: matched_object_descriptor["PositionTitle"].pretty(0).replace("\"", ""),
+                url: matched_object_descriptor["PositionURI"].pretty(0).replace("\"", ""),
+                id: matched_object_descriptor["PositionID"].pretty(0).replace("\"", ""),
+                locations,
+                orginization: matched_object_descriptor["OrganizationName"].pretty(0).replace("\"", ""),
+                department: matched_object_descriptor["DepartmentName"].pretty(0).replace("\"", ""),
+                low_grade: details["LowGrade"].pretty(0).replace("\"", ""),
+                high_grade: details["HighGrade"].pretty(0).replace("\"", ""),
+            });
+        };
+
+        let radius_center = match states.get(query.location_name.split(", ").last().unwrap()) {
+            Some(full_state) => {
+                let chunk = query.location_name.split(", ").last().unwrap();
+                let radius_center = query.location_name.replace(chunk, full_state);
+                radius_center
+            },
+            None => query.location_name.to_string(),
+        };
+
+        let radius_center = match places.get(radius_center.as_str()) {
+            Some(center) => {
+                [center.0.parse::<f32>().unwrap(), center.1.parse::<f32>().unwrap()]
+            },
+            None => {
+                [0.0, 0.0]
+            }
+        };
+    
+        SearchResult {
+            total_search_results: search_result_count_all.pretty(0).replace("\"", "").parse::<u32>().unwrap(),
+            number_of_pages: search_result["UserArea"]["NumberOfPages"].pretty(0).replace("\"", "").parse::<u32>().unwrap(),
+            total_returned_locations: position_set.len(),
+            current_page: query.page.parse::<u32>().unwrap(),
+            continental_us: query.continental_us,
+            positions,
+            radius: query.radius.parse::<u32>().unwrap_or(0),
+            radius_center: radius_center,
+        }
+    }
 }
