@@ -178,7 +178,7 @@
                 <input type="text" name="page" id="page" value="1" hidden>
                 <input type="text" name="number-of-pages" id="number-of-pages" value="" hidden>
                 <div class="col-lg-1">
-                    <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="btnSubmit" value="btnSubmit">Search</button>
+                    <button style="margin-bottom: 5px;" class="btn btn-primary btn-sm" name="btnSubmit" id="btnSubmit" value="btnSubmit">Search</button>
                     <a href="/search" class="btn btn-primary btn-sm">Reset</a>
                 </div>
                 <div class="col-lg-3">
@@ -230,47 +230,13 @@
                 </div>
             </div>
             <span id="map_holder">
-                <div class="row map" id="map" style="height: 900px;">
-                    
-                </div>
-                <div class="button-group">
-                        Page:
-                        <input type="button" class="btn btn-sm btn-link" onclick="first_page()" value="<<">
-                        <input type="button" class="btn btn-sm btn-link" onclick="previous_page()" value="<">
-                        <span id="page_number"></span>
-                        <input type="button" class="btn btn-sm btn-link" onclick="next_page()" value=">">
-                        <input type="button" class="btn btn-sm btn-link" onclick="last_page()" value=">>">
-                        of: <span id="total_pages"></span>
-                    </div>
             </span>
         </form>
     </div>
 
+    <script src="/static/js/add_div.js"></script>
     <script src="/static/js/mapper.js"></script>
     <script src="/static/js/search.js"></script>
-
-    {{!-- {% if content.scrol_to_anchor %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.location.hash = '#{{ content.scrol_to_anchor }}';
-        });
-    </script>
-    {% endif %} --}}
-
-{{!-- <section id="hello">
-  <h1>Hi {{ name }}!</h1>
-  <h3>Here are your items:</h3>
-  <ul>
-    {{#each items}}
-      <li>{{ this }}</li>
-    {{/each}}
-  </ul>
-</section>
-
-<section id="custom-helper">
-  <p>Try going to <a href="/search/hello/Your%20Name">/search/hello/Your Name</a>.</p>
-  <p>Also, check {{ wow "this" }} (custom helper) out!</p>
-</section> --}}
 
 {{/inline}}
 {{~> (parent)~}}

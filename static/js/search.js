@@ -14,10 +14,12 @@ const myForm = document.getElementById("search_form");
 myForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
+    addMapDiv();
     run_query()
 })
 
 function run_query() {
+
     const formData = new FormData(myForm);
 
     fetch(url, {
@@ -34,8 +36,8 @@ function run_query() {
 }
 
 function updatePageInfo(pageInfo) {
-    document.getElementById("page").textContent = pageInfo.current_page;
-    document.getElementById("number-of-pages").textContent = pageInfo.number_of_pages;
+    document.getElementById("page").value = pageInfo.current_page;
+    document.getElementById("number-of-pages").value = pageInfo.number_of_pages;
 
     document.getElementById("total_search_results").textContent = pageInfo.total_search_results;
     document.getElementById("total_returned_jobs").textContent = pageInfo.positions.length;
@@ -105,8 +107,9 @@ function get_locations(id) {
     document.search_form.submit();
 }
 
-function first_page() {
-    if (1 < document.getElementById("page").textContent) {
+function first_page() {addMapDiv();
+    if (1 < parseInt(document.getElementById("page").value)) {
+        addMapDiv();
         document.getElementById("page").value = "1";
         run_query();
     }
@@ -114,22 +117,25 @@ function first_page() {
 }
 
 function previous_page() {
-    if (1 < document.getElementById("page").textContent) {
-        document.getElementById("page").value = (parseInt(document.getElementById("page").textContent) - 1).toString();
+    if (1 < parseInt(document.getElementById("page").value)) {
+        addMapDiv();
+        document.getElementById("page").value = (parseInt(document.getElementById("page").value) - 1).toString();
         run_query();
     }
 }
 
 function next_page() {
-    if (parseInt(document.getElementById("page").textContent) < parseInt(document.getElementById("number-of-pages").textContent)) {
-        document.getElementById("page").value = (parseInt(document.getElementById("page").textContent) + 1).toString();
+    if (parseInt(document.getElementById("page").value) < parseInt(document.getElementById("number-of-pages").value)) {
+        addMapDiv();
+        document.getElementById("page").value = (parseInt(document.getElementById("page").value) + 1).toString();
         run_query();
     }
 }
 
 function last_page() {
-    if (document.getElementById("page").textContent < document.getElementById("number-of-pages").textContent) {
-        document.getElementById("page").value = document.getElementById("number-of-pages").textContent
+    if (parseInt(document.getElementById("page").value) < parseInt(document.getElementById("number-of-pages").value)) {
+        addMapDiv();
+        document.getElementById("page").value = document.getElementById("number-of-pages").value
         run_query();
     }
 }

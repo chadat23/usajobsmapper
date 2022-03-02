@@ -11,7 +11,6 @@ function makeMap(positions, continental_us, radius, radius_center) {
     var locations = {};
     var lat = [];
     var long = [];
-    console.log(document.getElementById("zoom_on_circle").checked);
     if (positions.length > 0) {
         for (const position of positions) {
             for (const location of position.locations) {
@@ -51,11 +50,6 @@ function makeMap(positions, continental_us, radius, radius_center) {
         }
         ne = [n, e];
         sw = [s, w];
-    }
-
-    var container = L.DomUtil.get('map'); 
-    if(container != null){ 
-        container._leaflet_id = null; 
     }
 
     var map = L.map('map').fitBounds([sw, ne]);
