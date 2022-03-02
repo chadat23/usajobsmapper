@@ -128,6 +128,7 @@ pub struct Query<'v> {
     pub location_name: &'v str,
     pub radius: &'v str,
     pub continental_us: bool,
+    pub zoom_on_circle: bool,
     sort_field: SortField,
     sort_direction: SortDirection,
     pub page: &'v str,
@@ -263,6 +264,7 @@ pub struct SearchResult {
     pub positions: Vec<Position>,
     pub total_returned_locations: usize,
     pub continental_us: bool,
+    pub zoom_on_circle: bool,
     pub radius: u32,
     pub radius_center:[f32; 2],
 }
@@ -296,7 +298,10 @@ impl SearchResult {
 
                 let location_info = match places.get(&name.to_lowercase()).cloned() {
                     Some((lat, long)) => (lat, long, true),
-                    None => ((39.833333).to_string(), (-98.583333).to_string(), false),
+                    None => {
+                        println!("Couldn't find: {:?}", name);
+                        ((39.833333).to_string(), (-98.583333).to_string(), false)
+                    },
                 };
                 locations.push(Location {
                     name,
@@ -342,6 +347,7 @@ impl SearchResult {
             total_returned_locations: position_set.len(),
             current_page: query.page.parse::<u32>().unwrap(),
             continental_us: query.continental_us,
+            zoom_on_circle: query.zoom_on_circle,
             positions,
             radius: query.radius.parse::<u32>().unwrap_or(0),
             radius_center: radius_center,

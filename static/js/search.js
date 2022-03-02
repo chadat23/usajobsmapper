@@ -46,17 +46,17 @@ function updatePageInfo(pageInfo) {
     document.getElementById("page_number").textContent = pageInfo.current_page;
     document.getElementById("total_pages").textContent = pageInfo.number_of_pages;
 
-    makeMap(pageInfo.positions, pageInfo.continental_us, pageInfo.radius, pageInfo.radius_center);
+    makeMap(pageInfo.positions, pageInfo.continental_us, pageInfo.zoom_on_circle, pageInfo.radius, pageInfo.radius_center);
 }
 
 function makeLabels(locations) {
     var location_labels = [];
 
     for (const [location_name, info] of Object.entries(locations)) {
-        toolTipText = "";
+        toolTipText = "<strong>" + location_name + "</strong>" + ":<br>";
         popupText = "";
         for (const position of info[0]) {
-            toolTipText += toolTip(position, location_name);
+            toolTipText += toolTip(position);
             popupText += popup(position);
         }
         location_labels.push({
@@ -70,7 +70,7 @@ function makeLabels(locations) {
     return location_labels
 }
 
-function toolTip(job, location) {
+function toolTip(job) {
 
     if (job.low_grade == job.high_grade) {
         high_grade = "";
@@ -80,8 +80,6 @@ function toolTip(job, location) {
 
     return job.title + 
         "<br>" + 
-        location + 
-        "<br>" + 
         "Grade: " + job.low_grade + high_grade + 
         "<br>" + 
         "Number of locations: " + job.locations.length + 
@@ -90,13 +88,18 @@ function toolTip(job, location) {
 }
 
 function popup(job) {
+    let see_all_locations = "";
+    if (job.locations.length > 1) {
+        see_all_locations = '<button type="button" class="btn btn-link location" name="location" value="'  + 
+            job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
+            '<br>';
+    }
+
     return job.title + 
         '<br>' + 
         '<a href="' + job.url + '" target="_blank">' + job.url + '</a>' + 
         '<br>' + 
-        '<button type="button" class="btn btn-link" name="location" value="'  + 
-        job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
-        '<br>' + 
+        see_all_locations +
         "<br>"
 }
 
@@ -141,14 +144,11 @@ function last_page() {
 }
 
 function setRadius() {
-    console.log("outer", document.getElementById("location_name").value, "lkj");
     if (document.getElementById("location_name").value == "") {
-        console.log("first");
         document.getElementById("radius").value = "";
     } else if (document.getElementById("radius").value == "") {
-        console.log("second");
         document.getElementById("radius").value = "25";
     }
 }
 
-makeMap([], false, 0, [0, 0]);
+makeMap([], false, false, 0, [0, 0]);
