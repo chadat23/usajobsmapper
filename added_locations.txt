@@ -1,74 +1,74 @@
 big bend national park, texas	29.2502011	-103.250452
+big cypress, florida	26.055725	-81.267459
+camp lejeune, north carolina	34.616329	-77.5220273
+campton, new hampshire	43.8324196	-71.6815542
+canon city, colorado	38.4316757	-105.2459917
+christiansted, virgin islands	17.7439481	-64.7079823
 colter bay, wyoming	43.896605	-110.649099
 columbus afb, mississippi	33.6406328	-88.4536876
 crater lake, oregon	42.9415262	-122.0988203
+crosslake, minnesota	46.6748871	-94.1374327
+davis monthan afb, arizona	32.1687339	-110.8808279
 death valley, california	36.4240473	-116.9140437
+elmendorf afb, alaska	61.2533525	-149.8312691
+espanola, new mexico	36.0037068	-106.0928275
+federal medical center carswell, texas	32.7852265	-97.4212475
+finegayan, guam	13.5605193	144.8287205
+fort ap hill, virginia	38.0718281	-77.330174
+fort detrick, maryland	39.4352529	-77.4310945
 fort harrison, montana	46.6159044	-112.1129883
+fort meade, south dakota	44.4096064	-103.4734418
+fort monroe, virginia	37.0042943	-76.3069024
+fort sill, oklahoma	34.6095754	-98.4503194
+glen canyon, utah	40.3302326	-111.6188087
 goodfellow afb, texas	31.4320699	-100.4062284
+great lakes naval training center, illinois	42.315022	-87.8407389
+gregg township, pennsylvania	40.8596617	-77.6192051
+grizzly flats, california	38.6582866	-120.7328539
+guaynabo, puerto rico	18.3591178	-66.1473162
+hadlock, washington	48.0321411	-122.7972789
+hanscom afb, massachusetts	42.4579541	-71.2882903
+hawaii national park, hawaii	19.3833349	-155.2087593
+herlong sierra ordnance depot, california	40.1487254	-120.1296442
 holloman afb, new mexico	33.076831	-106.2190016
 homestead afb, florida	27.8436408	-82.5028722
 honaunau, hawaii	19.425801	-155.908356
 kailua kona, hawaii	19.641941	-155.996933
-lake and peninsula county, alaska	60.567200	-154.614319
+kelly township, pennsylvania	40.9955357	-76.9601888
+kings canyon national park, california	36.9289888	-118.8675023
+kirtland afb, new mexico	35.0488506	-106.5527591
+lake and peninsula county, alaska	60.5672	-154.614319
 lees ferry, arizona	36.8661151	-111.5872123
+luke afb, arizona	33.5414884	-112.3776905
+maxwell afb, alabama	32.3926372	-86.3422472
+mcclellan, california	38.6656676	-121.4208695
 mesa verde national park, colorado	37.23333	-108.47981
+mountain rest, south carolina	34.8692372	-83.1635498
+naval air station jacksonville , florida	30.220019	-81.6872136
+naval air station pensacola , florida	30.355674	-87.2905226
+naval air station whidbey island, washington	48.3410904	-122.674446
+nellis afb, nevada	36.2439311	-115.0630017
 new york, new york	40.69766	-74.11976
+newcastle, virginia	37.50924	-80.1172042
+penasco, new mexico	36.1717236	-105.6980087
+peterson afb, colorado	38.8222617	-104.7029177
 petrified forest national park, arizona	35.0880783	-109.8065057
 piti, guam	13.4501257	144.757551
+princeton, oregon	43.2829327	-118.5914553
+robins afb, georgia	32.6400006	-83.6004738
 saint john island, virgin islands	18.5	-64.5
 saint louis, missouri	38.6312667	-90.2353056
 saint marys, georgia	30.7305142	-81.5464928
 san juan, puerto rico	18.465299	-66.116666
 sedro woolley, washington	48.5049158	-122.23494
-tuskegee institute, alabama	32.4301095	-85.7067335
-yellowstone national park, montana	44.6200885	-110.5606893
-yellowstone national park, wyoming	44.58540	-111.07446
-yosemite national park, california	37.73917	-119.57316
-washington, district of columbia	38.89386	-77.08461
-washington dc, district of columbia	38.89386	-77.08461
-glen canyon, utah	40.3302326	-111.6188087
-fort monroe, virginia	37.0042943	-76.3069024
-christiansted, virgin islands	17.7439481	-64.7079823
-kings canyon national park, california	36.9289888	-118.8675023
-sequoia national park, california	36.4846872	-118.8631762
-hawaii national park, hawaii	19.3833349	-155.2087593
-big cypress, florida	26.055725	-81.267459
-washington navy yard, district of columbia	38.8755792	-76.9998684
-princeton, oregon	43.2829327	-118.5914553
-canon city, colorado	38.4316757	-105.2459917
-penasco, new mexico	36.1717236	-105.6980087
-mountain rest, south carolina	34.8692372	-83.1635498
-fort detrick, maryland	39.4352529	-77.4310945
-elmendorf afb, alaska	61.2533525	-149.8312691
-finegayan, guam	13.5605193	144.8287205
-great lakes naval training center, illinois	42.315022	-87.8407389
-davis monthan afb, arizona	32.1687339	-110.8808279
-robins afb, georgia	32.6400006	-83.6004738
-camp lejeune, north carolina	34.616329	-77.5220273
-fort meade, south dakota	44.4096064	-103.4734418
-kirtland afb, new mexico	35.0488506	-106.5527591
-hanscom afb, massachusetts	42.4579541	-71.2882903
-espanola, new mexico	36.0037068	-106.0928275
-grizzly flats, california	38.6582866	-120.7328539
-hadlock, washington	48.0321411	-122.7972789
-naval air station whidbey island, washington	48.3410904	-122.674446
-white sands missile range, new mexico	32.9438952	-106.4284146
 selfridge ang base, michigan	42.6066678	-82.8033666
-campton, new hampshire	43.8324196	-71.6815542
-naval air station jacksonville , florida	30.220019	-81.6872136
-naval air station pensacola , florida	30.355674	-87.2905226
-mcclellan, california	38.6656676	-121.4208695
-newcastle, virginia	37.50924	-80.1172042
-fort ap hill, virginia	38.0718281	-77.330174
-nellis afb, nevada	36.2439311	-115.0630017
-fort sill, oklahoma	34.6095754	-98.4503194
-luke afb, arizona	33.5414884	-112.3776905
-peterson afb, colorado	38.8222617	-104.7029177
-crosslake, minnesota	46.6748871	-94.1374327
+sequoia national park, california	36.4846872	-118.8631762
 smartville, california	39.1183948	-121.3907191
-guaynabo, puerto rico	18.3591178	-66.1473162
-maxwell afb, alabama	32.3926372	-86.3422472
-herlong sierra ordnance depot, california	40.1487254	-120.1296442
-gregg township, pennsylvania	40.8596617	-77.6192051
-kelly township, pennsylvania	40.9955357	-76.9601888
-federal medical center carswell, texas	32.7852265	-97.4212475
+tuskegee institute, alabama	32.4301095	-85.7067335
+washington dc, district of columbia	38.89386	-77.08461
+washington navy yard, district of columbia	38.8755792	-76.9998684
+washington, district of columbia	38.89386	-77.08461
+white sands missile range, new mexico	32.9438952	-106.4284146
+yellowstone national park, montana	44.6200885	-110.5606893
+yellowstone national park, wyoming	44.5854	-111.07446
+yosemite national park, california	37.73917	-119.57316
