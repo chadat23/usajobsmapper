@@ -1,7 +1,10 @@
 use std::collections::{HashMap, HashSet};
 use std::fmt::format;
 use std::fmt;
+use std::fs::OpenOptions;
+use std::thread;
 use std::str::FromStr;
+use std::io::prelude::*;
 
 use rocket::form::{Form, Contextual, FromForm, FromFormField};
 use rocket::serde::{Serialize, Deserialize};
@@ -299,6 +302,7 @@ impl SearchResult {
                 let location_info = match places.get(&name.to_lowercase()).cloned() {
                     Some((lat, long)) => (lat, long, true),
                     None => {
+                        save_unknown_name(name.clone());
                         println!("Couldn't find: {:?}", name);
                         ((39.833333).to_string(), (-98.583333).to_string(), false)
                     },
@@ -353,4 +357,18 @@ impl SearchResult {
             radius_center: radius_center,
         }
     }
+}
+
+fn save_unknown_name(name: String) {
+    thread::spawn(move || {
+        let mut file = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open("unknown_locations.txt")
+        .unwrap();
+
+        if let Err(e) = writeln!(file, "{}", name) {
+            eprintln!("Couldn't write to file: {}", e);
+        }
+    });
 }
