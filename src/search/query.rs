@@ -302,7 +302,7 @@ impl SearchResult {
                 let location_info = match places.get(&name.to_lowercase()).cloned() {
                     Some((lat, long)) => (lat, long, true),
                     None => {
-                        save_unknown_name(name.clone());
+                        save_unknown_name("unknown_locations.txt".to_string(), name.clone());
                         println!("Couldn't find: {:?}", name);
                         ((39.833333).to_string(), (-98.583333).to_string(), false)
                     },
@@ -333,7 +333,13 @@ impl SearchResult {
                 let radius_center = query.location_name.replace(chunk, full_state);
                 radius_center
             },
-            None => query.location_name.to_string(),
+            None => {
+                if query.location_name != "" {
+                    save_unknown_name("unknown_search_locations.txt".to_string(), query.location_name.clone().to_string());
+                    println!("couldn't find search location: {}", query.location_name);
+                }
+                query.location_name.to_string()
+            },
         };
 
         let radius_center = match places.get(radius_center.as_str()) {
@@ -359,12 +365,12 @@ impl SearchResult {
     }
 }
 
-fn save_unknown_name(name: String) {
+fn save_unknown_name(file: String, name: String) {
     thread::spawn(move || {
         let mut file = OpenOptions::new()
         .write(true)
         .append(true)
-        .open("unknown_locations.txt")
+        .open(file)
         .unwrap();
 
         if let Err(e) = writeln!(file, "{}", name) {

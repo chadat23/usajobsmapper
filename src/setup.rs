@@ -61,6 +61,7 @@ pub fn abrev_to_full() -> HashMap<String, String> {
         (String::from("wy"), String::from("wyoming")),
         //  ------------
         (String::from("dc"), String::from("washington district of columbia")),
+        (String::from("gu"), String::from("guam")),
         (String::from("vg"), String::from("british virgin islands")),
     ])
 }
