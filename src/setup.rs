@@ -120,22 +120,3 @@ pub fn make_usajobs_credentials(file: &str) -> UsaJobsCredentials{
 
     UsaJobsCredentials { apikey, useragent}
 }
-
-
-// kings canyon national park, california	36.9289888,-118.8675023
-// marin county, california	38.0677967,-122.8810691
-// sequoia national park, california	36.4846872,-118.8631762
-// hawaii national park, hawaii	19.3833349,-155.2087593
-// whatcom county, washington	
-// tallapoosa county, alabama	
-// big cypress, florida	
-// miami-dade county, florida	
-// bell county, kentucky	
-// franklin county, mississippi	
-// alleghany county, north carolina	
-// burke county, north carolina	
-// mitchell county, north carolina	
-// watauga county, north carolina	
-// yancey county, north carolina	
-// carroll county, virginia	
-// washington navy yard, district of columbia

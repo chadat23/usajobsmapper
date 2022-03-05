@@ -13,13 +13,13 @@ const myForm = document.getElementById("search_form");
 
 myForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    document.getElementById("page").value = "1";
 
     addMapDiv();
     run_query()
 })
 
 function run_query() {
-
     const formData = new FormData(myForm);
 
     fetch(url, {
