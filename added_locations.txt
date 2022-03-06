@@ -122,6 +122,7 @@ pyong taek, south korea	36.9948168	127.0897452
 ramstein, germany	49.4444308	7.5299037
 randolph afb, texas	29.5305902	-98.2973425
 robins afb, georgia	32.6400006	-83.6004738
+romania, romania	45.919973	22.7780763
 sacramento south, california	38.5618473	-121.5129521
 saint charles, illinois	41.929126	-88.3546004
 saint john island, virgin islands	18.5	-64.5

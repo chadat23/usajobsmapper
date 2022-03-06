@@ -59,10 +59,13 @@ function makeMap(positions, continental_us, zoom_on_radius, radius, radius_cente
 
     var location_labels = makeLabels(locations);
 
+    var is_not_mobile = !isMob();
     for (const location of location_labels) {
         if (location["found"]) {
             let marker = L.marker(location["lat_long"]).addTo(map);
-            marker.bindTooltip(location["tooltip"].substring(0, location["tooltip"].length - 4), { maxWidth : 350 });
+            if (is_not_mobile) {
+                marker.bindTooltip(location["tooltip"].substring(0, location["tooltip"].length - 4), { maxWidth : 350 });
+            }
             marker.bindPopup(location["popup"].substring(0, location["popup"].length - 4), { maxWidth : 350 });
         }
     }
@@ -91,7 +94,9 @@ function makeMap(positions, continental_us, zoom_on_radius, radius, radius_cente
             iconAnchor: [16, 16],
         })
         let marker = L.marker(lost_location, {icon: leafletIcon}).addTo(map);
-        marker.bindTooltip(lost_locations_tooltip.substring(0, lost_locations_tooltip.length - 4), { maxWidth : 350 });
+        if (is_not_mobile) {
+            marker.bindTooltip(lost_locations_tooltip.substring(0, lost_locations_tooltip.length - 4), { maxWidth : 350 });
+        }
         marker.bindPopup(lost_locations_popup.substring(0, lost_locations_popup.length - 4), { maxWidth : 350 });
     }
 

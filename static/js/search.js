@@ -51,13 +51,14 @@ function updatePageInfo(pageInfo) {
 
 function makeLabels(locations) {
     var location_labels = [];
+    var is_mobile = isMob();
 
     for (const [location_name, info] of Object.entries(locations)) {
         toolTipText = "<strong>" + location_name + "</strong>" + ":<br>";
-        popupText = "";
+        popupText = is_mobile ? "<strong>" + location_name + "</strong>" + ":<br>" : "";
         for (const position of info[0]) {
             toolTipText += toolTip(position);
-            popupText += popup(position);
+            popupText += popup(position, is_mobile);
         }
         location_labels.push({
             "tooltip": toolTipText,
@@ -87,7 +88,7 @@ function toolTip(job) {
         "<br>"
 }
 
-function popup(job) {
+function popup(job, is_mobile) {
     let see_all_locations = "";
     if (job.locations.length > 1) {
         see_all_locations = '<button type="button" class="btn btn-link location" name="location" value="'  + 
@@ -99,12 +100,18 @@ function popup(job) {
         see_all_locations += '<br>';
     }
 
-    return job.title + 
+    var title = job.title;
+    if (is_mobile) {
+        title = toolTip(job);
+        title = title.substring(0, title.length - 8);
+    }
+
+    return title + 
         '<br>' + 
         '<a href="' + job.url + '" target="_blank">' + job.url + '</a>' + 
         '<br>' + 
         see_all_locations +
-        "<br>"
+        "<br>";        
 }
 
 function get_locations(id, focus_on_radius) {
@@ -131,7 +138,6 @@ function first_page() {addMapDiv();
         document.getElementById("page").value = "1";
         run_query();
     }
-
 }
 
 function previous_page() {
