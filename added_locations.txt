@@ -48,8 +48,8 @@ fort mcnair, district of columbia	38.8682861	-77.0226419
 fort meade, south dakota	44.4096064	-103.4734418
 fort monroe, virginia	37.0042943	-76.3069024
 fort sill, oklahoma	34.6095754	-98.4503194
-glacier park, montana   48.6602627  -114.1260303
-glacier national park, montana   48.6602627  -114.1260303
+glacier park, montana	48.6602627	-114.1260303
+glacier national park, montana	48.6602627	-114.1260303
 glen canyon, utah	40.3302326	-111.6188087
 goodfellow afb, texas	31.4320699	-100.4062284
 great lakes naval training center, illinois	42.315022	-87.8407389
