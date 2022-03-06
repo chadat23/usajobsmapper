@@ -33,4 +33,14 @@ function popup(job) {
         '<br>'
 }
 
+function setHeight() {
+    var height = "900px"
+    if (detectMob()) {
+        height = "500px"
+    }
+
+    document.getElementById("map_holder").innerHTML = '<div class="row map" id="map" style="height: ' + height + '"></div>';
+}
+
+setHeight();
 makeMap(positions(), continental_us(), zoom_on_circle(), radius(), radius_center());
