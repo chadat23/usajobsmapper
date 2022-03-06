@@ -3,22 +3,6 @@ var min_lat = 25.827089;
 var max_long = -66.927119;
 var min_long = -124.639440;
 
-function detectMob() {
-    const toMatch = [
-        /Android/i,
-        /webOS/i,
-        /iPhone/i,
-        /iPad/i,
-        /iPod/i,
-        /BlackBerry/i,
-        /Windows Phone/i
-    ];
-    
-    return toMatch.some((toMatchItem) => {
-        return navigator.userAgent.match(toMatchItem);
-    });
-}
-
 function makeMap(positions, continental_us, zoom_on_circle, radius, radius_center) {
 
     var sw = [min_lat, min_long];
