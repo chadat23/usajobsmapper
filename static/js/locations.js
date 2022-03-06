@@ -1,19 +1,3 @@
-function detectMob() {
-    const toMatch = [
-        /Android/i,
-        /webOS/i,
-        /iPhone/i,
-        /iPad/i,
-        /iPod/i,
-        /BlackBerry/i,
-        /Windows Phone/i
-    ];
-    
-    return toMatch.some((toMatchItem) => {
-        return navigator.userAgent.match(toMatchItem);
-    });
-}
-
 function makeLabels(locations) {
     var location_labels = [];
 
@@ -50,12 +34,7 @@ function popup(job) {
 }
 
 function setHeight() {
-    var height = "900px"
-    if (detectMob()) {
-        height = "500px"
-    }
-
-    document.getElementById("map_holder").innerHTML = '<div class="row map" id="map" style="height: ' + height + '"></div>';
+    document.getElementById("map_holder").innerHTML = '<div class="row map" id="map" style="height: ' + height() + '"></div>';
 }
 
 setHeight();
