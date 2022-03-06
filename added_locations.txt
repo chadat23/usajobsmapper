@@ -48,6 +48,8 @@ fort mcnair, district of columbia	38.8682861	-77.0226419
 fort meade, south dakota	44.4096064	-103.4734418
 fort monroe, virginia	37.0042943	-76.3069024
 fort sill, oklahoma	34.6095754	-98.4503194
+glacier park, montana   48.6602627  -114.1260303
+glacier national park, montana   48.6602627  -114.1260303
 glen canyon, utah	40.3302326	-111.6188087
 goodfellow afb, texas	31.4320699	-100.4062284
 great lakes naval training center, illinois	42.315022	-87.8407389
@@ -98,6 +100,7 @@ naval air station pensacola , florida	30.355674	-87.2905226
 naval air station whidbey island, washington	48.3410904	-122.674446
 naval base newport, rhode island	41.520139	-71.3255266
 naval shipyard, portsmouth, virginia	36.8246638	-76.3089268
+naval surface warfare center, maryland	39.167697	-78.7292574
 naval weapons station, yorktown, virginia	37.2381733	-76.5608544
 nellis afb, nevada	36.2439311	-115.0630017
 new york, new york	40.69766	-74.11976
@@ -116,6 +119,7 @@ petrified forest national park, arizona	35.0880783	-109.8065057
 piti, guam	13.4501257	144.757551
 princeton, oregon	43.2829327	-118.5914553
 pyong taek, south korea	36.9948168	127.0897452
+ramstein, germany	49.4444308	7.5299037
 randolph afb, texas	29.5305902	-98.2973425
 robins afb, georgia	32.6400006	-83.6004738
 sacramento south, california	38.5618473	-121.5129521
@@ -155,8 +159,11 @@ whiteman afb, missouri	38.7283066	-93.580926
 wilkes barre township, pennsylvania	41.2337119	-75.8774996
 wilkes barre, pennsylvania	41.2473619	-75.8936
 winchester county, virginia	39.1679128	-78.2038613
+yellowstone, montana	44.6200885	-110.5606893
 yellowstone national park, montana	44.6200885	-110.5606893
+yellowstone, wyoming	44.5854	-111.07446
 yellowstone national park, wyoming	44.5854	-111.07446
+yosemite, california	37.73917	-119.57316
 yosemite national park, california	37.73917	-119.57316
 yuma proving ground, arizona	33.0177983	-114.261294
 zama, camp zama, japan	35.4920531	139.3887336
