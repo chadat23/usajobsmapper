@@ -106,8 +106,11 @@ function popup(job) {
 function get_locations(id) {
     document.getElementById("search_form").method = "post";
     document.getElementById("search_form").action = "/search/locations/" + id;
+    document.getElementById("search_form").target = "_blank";
     
     document.search_form.submit();
+
+    document.getElementById("search_form").target = "";
 }
 
 function first_page() {addMapDiv();
