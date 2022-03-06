@@ -46,7 +46,7 @@ function updatePageInfo(pageInfo) {
     document.getElementById("page_number").textContent = pageInfo.current_page;
     document.getElementById("total_pages").textContent = pageInfo.number_of_pages;
 
-    makeMap(pageInfo.positions, pageInfo.continental_us, pageInfo.zoom_on_circle, pageInfo.radius, pageInfo.radius_center);
+    makeMap(pageInfo.positions, pageInfo.continental_us, pageInfo.zoom_on_radius, pageInfo.radius, pageInfo.radius_center);
 }
 
 function makeLabels(locations) {
@@ -91,8 +91,12 @@ function popup(job) {
     let see_all_locations = "";
     if (job.locations.length > 1) {
         see_all_locations = '<button type="button" class="btn btn-link location" name="location" value="'  + 
-            job.id + '" onclick="get_locations(\'' + job.id + '\');">See All Locations</button>' + 
-            '<br>';
+            job.id + '" onclick="get_locations(\'' + job.id + '\', false);">See All Locations</button>';
+        if (document.getElementById("zoom_on_radius").checked) {
+            see_all_locations += ' <button type="button" class="btn btn-link location" name="location" value="'  + 
+            job.id + '" onclick="get_locations(\'' + job.id + '\', true);">See Locations in Radius</button>';
+        }
+        see_all_locations += '<br>';
     }
 
     return job.title + 
@@ -103,14 +107,22 @@ function popup(job) {
         "<br>"
 }
 
-function get_locations(id) {
+function get_locations(id, focus_on_radius) {
     document.getElementById("search_form").method = "post";
     document.getElementById("search_form").action = "/search/locations/" + id;
     document.getElementById("search_form").target = "_blank";
+
+    var radius = document.getElementById("zoom_on_radius").value;
+    if (focus_on_radius) {
+        document.getElementById("zoom_on_radius").value = "on"
+    } else {
+        document.getElementById("zoom_on_radius").value = "off"
+    }
     
     document.search_form.submit();
 
     document.getElementById("search_form").target = "";
+    document.getElementById("zoom_on_radius").value = radius;
 }
 
 function first_page() {addMapDiv();

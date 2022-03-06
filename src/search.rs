@@ -109,7 +109,7 @@ pub async fn locations<'r>(form: Form<Contextual<'r, Query<'r>>>,
         parent: "search/base",
         positions: format!("{:?}", json!(positions.positions).to_string().replace("\n", " ")),
         continental_us: query.continental_us,
-        zoom_on_circle: query.zoom_on_circle,
+        zoom_on_radius: query.zoom_on_radius,
         radius: positions.radius,
         radius_center: positions.radius_center,
     })

@@ -38,4 +38,4 @@ function setHeight() {
 }
 
 setHeight();
-makeMap(positions(), continental_us(), zoom_on_circle(), radius(), radius_center());
+makeMap(positions(), continental_us(), zoom_on_radius(), radius(), radius_center());

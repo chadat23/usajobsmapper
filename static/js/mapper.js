@@ -3,7 +3,7 @@ var min_lat = 25.827089;
 var max_long = -66.927119;
 var min_long = -124.639440;
 
-function makeMap(positions, continental_us, zoom_on_circle, radius, radius_center) {
+function makeMap(positions, continental_us, zoom_on_radius, radius, radius_center) {
 
     var sw = [min_lat, min_long];
     var ne = [max_lat, max_long];
@@ -24,7 +24,7 @@ function makeMap(positions, continental_us, zoom_on_circle, radius, radius_cente
             }
         }
 
-        if (zoom_on_circle && radius_center[0] > 0.001 && radius > 0.001) {
+        if (zoom_on_radius && radius_center[0] > 0.001 && radius > 0.001) {
             var radius_at_lat = Math.sin(radius_center[0]) * 24901.461 / (2 * Math.PI);
             var circumference_at_lat = Math.PI * radius_at_lat**2;
             var degrees_per_mile_at_lat = 360 / circumference_at_lat;
