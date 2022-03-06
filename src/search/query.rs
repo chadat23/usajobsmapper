@@ -327,7 +327,7 @@ impl SearchResult {
             });
         };
 
-        let radius_center = match states.get(query.location_name.split(", ").last().unwrap()) {
+        let radius_center = match states.get(query.location_name.to_lowercase().split(", ").last().unwrap()) {
             Some(full_state) => {
                 let chunk = query.location_name.split(", ").last().unwrap();
                 let radius_center = query.location_name.replace(chunk, full_state);
@@ -342,7 +342,7 @@ impl SearchResult {
             },
         };
 
-        let radius_center = match places.get(radius_center.as_str()) {
+        let radius_center = match places.get(radius_center.to_lowercase().as_str()) {
             Some(center) => {
                 [center.0.parse::<f32>().unwrap(), center.1.parse::<f32>().unwrap()]
             },
