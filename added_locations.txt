@@ -1,8 +1,19 @@
+abu dhabi, united arab emirates	24.3870789	54.4185366
 altus afb, oklahoma	34.6551597	-99.2900436
+andersen air base, guam	13.5446733	144.7637859
+ansbach, germany	49.2889554	10.4852678
 barksdale afb, louisiana	32.497168	-93.6472675
+barrigada, guam	13.4775137	144.7930472
+beale afb, california	39.1086808	-121.3916708
+belgium, belgium	50.4974228	3.3451733
 bern, pennsylvania	40.399288	-76.0303658
 big bend national park, texas	29.2502011	-103.250452
 big cypress, florida	26.055725	-81.267459
+brasilia, brazil	-15.7215857	-48.0073977
+bronx, new york	40.8517687	-73.9109736
+brownstown, michigan	42.1062711	-83.2900525
+brussels, belgium	50.8552114	4.3053778
+bunlevel, north carolina	35.309623	-78.7890542
 camp j t robinson, arkansas	34.8195103	-92.2901419
 camp lejeune, north carolina	34.616329	-77.5220273
 campton, new hampshire	43.8324196	-71.6815542
@@ -18,15 +29,21 @@ de ridder, louisiana	30.8503995	-93.3307633
 death valley, california	36.4240473	-116.9140437
 dover afb, delaware	39.1277341	-75.4706239
 du bois, pennsylvania	41.1197634	-78.7748236
+dulles airport, virginia	38.9531204	-77.4587275
 edwards afb, california	34.9117134	-117.9515273
+egg harbor township, new jersey	39.3797326	-74.675623
 eglin afb, florida	30.4614107	-86.5622652
+eielson afb, alaska	64.6749262	-147.1978278
 elmendorf afb, alaska	61.2533525	-149.8312691
 espanola, new mexico	36.0037068	-106.0928275
+ewa beach, hawaii	21.3181637	-158.0180447
+fairchild afb, washington	47.6160006	-117.6749976
 federal medical center carswell, texas	32.7852265	-97.4212475
 finegayan, guam	13.5605193	144.8287205
 fort ap hill, virginia	38.0718281	-77.330174
 fort detrick, maryland	39.4352529	-77.4310945
 fort harrison, montana	46.6159044	-112.1129883
+fort huachuca, arizona	31.5625155	-110.3564981
 fort mcnair, district of columbia	38.8682861	-77.0226419
 fort meade, south dakota	44.4096064	-103.4734418
 fort monroe, virginia	37.0042943	-76.3069024
@@ -35,24 +52,35 @@ glen canyon, utah	40.3302326	-111.6188087
 goodfellow afb, texas	31.4320699	-100.4062284
 great lakes naval training center, illinois	42.315022	-87.8407389
 gregg township, pennsylvania	40.8596617	-77.6192051
+griswold, connecticut	41.5781721	-71.9975604
 grizzly flats, california	38.6582866	-120.7328539
 guaynabo, puerto rico	18.3591178	-66.1473162
 hadlock, washington	48.0321411	-122.7972789
+halifax, canada	43.7226661	-62.3551901
 hanscom afb, massachusetts	42.4579541	-71.2882903
 hawaii national park, hawaii	19.3833349	-155.2087593
 herlong sierra ordnance depot, california	40.1487254	-120.1296442
+hill afb, utah	41.109684	-111.9848871
 holloman afb, new mexico	33.076831	-106.2190016
 homestead afb, florida	27.8436408	-82.5028722
 honaunau, hawaii	19.425801	-155.908356
+iraq, iraq	33.2053981	41.471168
 kailua kona, hawaii	19.641941	-155.996933
 kelly township, pennsylvania	40.9955357	-76.9601888
 kennedy space center, florida	28.5460208	-80.6828582
+kings bay, georgia	30.7970101	-81.5686529
 kings canyon national park, california	36.9289888	-118.8675023
 kirtland afb, new mexico	35.0488506	-106.5527591
+kuwait, kuwait	29.3141004	46.9752889
 lake and peninsula county, alaska	60.5672	-154.614319
+langley afb, virginia	37.0835117	-76.3614128
+laughlin afb, texas	29.3577983	-100.802894
 lees ferry, arizona	36.8661151	-111.5872123
+lees summit, missouri	38.9256681	-94.4577825
 little rock afb, arkansas	34.9052706	-92.1551215
 luke afb, arizona	33.5414884	-112.3776905
+lyman, maine	43.5018995	-70.713494
+malmstrom afb, montana	47.5050591	-111.2015175
 mather afb, california	38.5636634	-121.2993997
 maxwell afb, alabama	32.3926372	-86.3422472
 mcchord afb, washington	47.137347	-122.5203525
@@ -61,45 +89,74 @@ mesa verde national park, colorado	37.23333	-108.47981
 millcreek township, pennsylvania	42.1009796	-80.1710181
 minot afb, north dakota	48.4198996	-101.3632556
 moffett field, california	37.4090797	-122.0529711
+montreal, canada	45.5581968	-73.8703847
+mountain home afb, idaho	43.0511439	-115.8836402
 mountain rest, south carolina	34.8692372	-83.1635498
 naval air station jacksonville , florida	30.220019	-81.6872136
+naval air station oceana, virginia	36.8123683	-76.0269923
 naval air station pensacola , florida	30.355674	-87.2905226
 naval air station whidbey island, washington	48.3410904	-122.674446
+naval base newport, rhode island	41.520139	-71.3255266
+naval shipyard, portsmouth, virginia	36.8246638	-76.3089268
+naval weapons station, yorktown, virginia	37.2381733	-76.5608544
 nellis afb, nevada	36.2439311	-115.0630017
 new york, new york	40.69766	-74.11976
 newcastle, virginia	37.50924	-80.1172042
+oahu island, hawaii	21.4840154	-158.1053124
 offutt afb, nebraska	41.1173819	-95.9397932
+pago pago, american samoa	-14.2777514	-170.7083925
+panama city naval surface warfare center, florida	30.1763841	-85.7615166
+panama city, panama	9.0817275	-79.5932216
 patrick afb, florida	28.2423452	-80.6231752
+patuxent river, maryland	38.2759009	-76.4538678
+pearl harbor naval base, oahu, hawaii	21.3537347	-157.9516387
 penasco, new mexico	36.1717236	-105.6980087
 peterson afb, colorado	38.8222617	-104.7029177
 petrified forest national park, arizona	35.0880783	-109.8065057
 piti, guam	13.4501257	144.757551
 princeton, oregon	43.2829327	-118.5914553
+pyong taek, south korea	36.9948168	127.0897452
 randolph afb, texas	29.5305902	-98.2973425
 robins afb, georgia	32.6400006	-83.6004738
 sacramento south, california	38.5618473	-121.5129521
+saint charles, illinois	41.929126	-88.3546004
 saint john island, virgin islands	18.5	-64.5
 saint louis, missouri	38.6312667	-90.2353056
 saint marys, georgia	30.7305142	-81.5464928
 saint petersburg, florida	27.7789036	-82.7248603
+saint thomas, virgin islands	18.3429754	-64.9719512
+saipan, mariana island, northern mariana islands	15.1933509	145.6903464
+san francisco county, california	37.7577627	-122.4726194
 san juan, puerto rico	18.465299	-66.116666
+sasebo, japan	33.1965041	129.3242875
+schriever afb, colorado	38.8024769	-104.5249558
 scott afb, illinois	38.5415953	-89.8571982
 sedro woolley, washington	48.5049158	-122.23494
 selfridge ang base, michigan	42.6066678	-82.8033666
 sequoia national park, california	36.4846872	-118.8631762
+singapore, singapore	1.3143394	103.7041657
 smartville, california	39.1183948	-121.3907191
+spokane international airport, washington	47.6212099	-117.5355608
 stennis space center, mississippi	30.3650647	-89.6178802
+tinker afb, oklahoma	35.4278234	-97.4169838
 tuskegee institute, alabama	32.4301095	-85.7067335
 tyndall afb, florida	30.0822442	-85.6565553
 vandenberg afb, california	34.7429593	-120.5495254
 vint hill farms military installation, virginia	38.4698083	-77.7401988
+virginia beach county, virginia	36.7958623	-76.1527115
 wallops island, virginia	37.8545461	-75.4996098
+warsaw, poland	52.2330653	20.9211126
 washington dc, district of columbia	38.89386	-77.08461
 washington navy yard, district of columbia	38.8755792	-76.9998684
 washington, district of columbia	38.89386	-77.08461
+westover air reserve base, massachusetts	42.1991203	-72.5458145
 white sands missile range, new mexico	32.9438952	-106.4284146
+whiteman afb, missouri	38.7283066	-93.580926
 wilkes barre township, pennsylvania	41.2337119	-75.8774996
 wilkes barre, pennsylvania	41.2473619	-75.8936
+winchester county, virginia	39.1679128	-78.2038613
 yellowstone national park, montana	44.6200885	-110.5606893
 yellowstone national park, wyoming	44.5854	-111.07446
 yosemite national park, california	37.73917	-119.57316
+yuma proving ground, arizona	33.0177983	-114.261294
+zama, camp zama, japan	35.4920531	139.3887336
